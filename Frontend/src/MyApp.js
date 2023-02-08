@@ -29,7 +29,7 @@ function removeOneCharacter (index){
 async function makeDeleteCall(index){
   try {
      var _id = characters[index]._id;
-     const response = await axios.delete('http://localhost:5000/users/' + _id);
+     const response = await axios.delete('http://localhost:5001/users/' + _id);
       return response;
     }
   catch (error) {
@@ -50,7 +50,7 @@ function updateList(person) {
 
 async function fetchAll(){
   try{
-    const responce = await axios.get('http://localhost:5000/users');
+    const responce = await axios.get('http://localhost:5001/users');
     return responce.data.users_list;
   }
   catch(error){
@@ -62,7 +62,7 @@ async function fetchAll(){
 
 async function makePostCall(person){
   try {
-     const response = await axios.post('http://localhost:5000/users', person);
+     const response = await axios.post('http://localhost:5001/users', person);
      return response;
   }
   catch (error) {
