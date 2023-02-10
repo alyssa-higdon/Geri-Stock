@@ -3,6 +3,20 @@ const cors = require('cors');
 
 const userServices = require('./models/user-services');
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/test";
+
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  if (err) throw err;
+  const db = client.db("test");
+  console.log("Connected to MongoDB!");
+});
+
+
 const app = express();
 const port = 5001;
 
