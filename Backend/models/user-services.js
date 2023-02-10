@@ -3,7 +3,7 @@ const userModel = require("./user");
 mongoose.set("debug", true);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/uesrs", {
+  .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/test", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
