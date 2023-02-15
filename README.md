@@ -10,3 +10,7 @@
 
 3) go into the frontend folder
 4) run ```npm start```
+
+
+## IDE Installation
+1) In VS Code, add the extention Prettier ESLint
