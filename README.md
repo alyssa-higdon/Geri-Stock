@@ -12,5 +12,6 @@
 4) run ```npm start```
 
 
-## IDE Installation
+## Prettier ESLint Installation
 1) In VS Code, add the extention Prettier ESLint
+2) In terminal, go to your working directory and run ```npm install eslint-config-prettier eslint-plugin-prettier prettier --save-dev```
