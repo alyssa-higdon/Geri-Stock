@@ -16,13 +16,6 @@
 1) In VS Code, add the extention Prettier ESLint
 2) In terminal, go to your root directory and run ```npm install eslint-config-prettier eslint-plugin-prettier prettier --save-dev```
 3) To ensure that one only pushes lint free code to git hub:
-- from your root directory
-        - a) from your root directory, go to ```.git/hooks/pre-commit```.sample
-        - b) replace the contents of the file with the contents of ```pre-commit.txt``` in the root of this gitHub
-        - c) rename ```pre-commit.sample``` to ```pre-commit```
-
-
-Test List:
-- first
-- half
-- second
+        - from your root directory, go to ```.git/hooks/pre-commit```.sample
+        - replace the contents of the file with the contents of ```pre-commit.txt``` in the root of this gitHub
+        - rename ```pre-commit.sample``` to ```pre-commit```
