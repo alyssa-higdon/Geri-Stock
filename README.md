@@ -19,3 +19,9 @@
      - from your root directory, go to ```.git/hooks/pre-commit```.sample
      - replace the contents of the file with the contents of ```pre-commit.txt``` in the root of this gitHub
      - rename ```pre-commit.sample``` to ```pre-commit```
+
+## Style Guides
+1) ESLint and Prettier
+2) lowerCamelCase
+3) Same-line curly braces
+4) Double quotes
