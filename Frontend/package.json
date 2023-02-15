@@ -35,7 +35,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }, 
+  },
   "env": {
     "browser": true,
     "es2021": true,
@@ -50,5 +50,8 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended"
-]
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
