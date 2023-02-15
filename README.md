@@ -19,3 +19,8 @@
         - a) from your root directory, go to ```.git/hooks/pre-commit```.sample
         - b) replace the contents of the file with the contents of ```pre-commit.txt``` in the root of this gitHub
         - c) rename ```pre-commit.sample``` to ```pre-commit```
+
+
+Test List:
+- first
+- second
