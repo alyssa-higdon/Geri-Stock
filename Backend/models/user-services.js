@@ -6,7 +6,7 @@ dotenv.config();
 mongoose.set("debug", true);
 
 mongoose
-  .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/test", {
+  .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
