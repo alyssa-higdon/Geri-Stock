@@ -23,5 +23,5 @@
 
 Test List:
 - first
-       - half
+-        half
 - second
