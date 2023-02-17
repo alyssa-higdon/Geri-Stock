@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Table from './Table';
 import Form from './Form';
 import axios from 'axios';
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 
 function MyApp(){
   const [characters, setCharacters] = useState([]);
@@ -71,12 +72,42 @@ async function makePostCall(person){
   }
 }
 
-return (
-  <div className="container">
-    <Table characterData={characters} removeCharacter={removeOneCharacter} />
-    <Form handleSubmit = {updateList} />
-  </div>
-)
-}
 
+
+return (
+  // This is what we had before:
+  // <div className="container">
+  //   <Table characterData={characters} removeCharacter={removeOneCharacter} />
+  //   <Form handleSubmit={updateList} />
+  // </div>
+  // update basename below when deploying to gh-pages
+  <div className="container">
+    <h1>Choose your path!</h1>
+    <BrowserRouter basename="/">
+      <nav>
+        <ul>
+          <li>
+            <Link to="/users-table">List all</Link>
+          </li>
+          <li>
+            <Link to="/form">Insert one</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route
+          path="/users-table"
+          element={
+            <Table
+              characterData={characters}
+              removeCharacter={removeOneCharacter}
+            />
+          }
+        />
+        <Route path="/form" element={<Form handleSubmit={updateList} />} />
+      </Routes>
+    </BrowserRouter>
+  </div>
+);
+}
 export default MyApp;
