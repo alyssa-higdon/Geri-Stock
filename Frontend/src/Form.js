@@ -21,18 +21,23 @@ function Form(props){
 
       function submitForm() {
         if (person.password === person.passwordReentry) {
-          props.handleSubmit(person);
-          setPerson({
-            name: "",
-            username: "",
-            role: "",
-            password: "",
-            passwordReentry: "",
-          });
+          if (person.password.length >= 8) {
+            props.handleSubmit(person);
+            setPerson({
+              name: "",
+              username: "",
+              role: "",
+              password: "",
+              passwordReentry: "",
+            });
+          } else {
+            alert("Password must be at least 8 characters long!");
+          }
         } else {
           alert("Passwords do not match!");
         }
       }
+      
       
 
     return (
