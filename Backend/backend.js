@@ -12,27 +12,16 @@ const users = {
        { 
           id : 'xyz789',
           name : 'Charlie',
-          job: 'Janitor',
+          username: 'im_charlie',
+          password: '123',
+          role: 'end_user',
        },
        {
           id : 'abc123', 
           name: 'Mac',
-          job: 'Bouncer',
-       },
-       {
-          id : 'ppp222', 
-          name: 'Mac',
-          job: 'Professor',
-       }, 
-       {
-          id: 'yat999', 
-          name: 'Dee',
-          job: 'Aspring actress',
-       },
-       {
-          id: 'zap555', 
-          name: 'Dennis',
-          job: 'Bartender',
+          username: 'mac_123',
+          password: 'password',
+          role: 'admin',
        }
     ]
  }
@@ -47,10 +36,10 @@ app.get('/', (req, res) => {
 
 app.get('/users', (req, res) => {
     const name = req.query.name;
-    const job = req.query.job;
-    if (name != undefined && job != undefined){
+    const username = req.query.username;
+    if (name != undefined && username != undefined){
         let result = findUserByName(name);
-        let result1 = findUserByJob(result, job);
+        let result1 = findUserByUsername(result, job);
 
         result1 = {users_list: result1};
         res.send(result1);
@@ -60,8 +49,8 @@ app.get('/users', (req, res) => {
         result = {users_list: result};
         res.send(result);
     }
-    if (job != undefined){
-        let result = findUserByJob(users['users_list'], job);
+    if (username != undefined){
+        let result = findUserByUsername(users['users_list'], username);
         result = {users_list: result};
         res.send(result);
     }
@@ -122,8 +111,8 @@ const findUserByName = (name) => {
     return users['users_list'].filter( (user) => user['name'] === name); 
 }
 
-const findUserByJob = (list, job) => { 
-    return list.filter( (user) => user['job'] === job); 
+const findUserByUsername = (list, username) => { 
+    return list.filter( (user) => user['username'] === username); 
 }
 
 
