@@ -4,46 +4,93 @@ function Form(props){
     const [person, setPerson] = useState(
         {
             name: "",
-            job: "",
+            username: "",
+            password: "",
+            role: "",
         }
     );
     
-    function handleChange(event){
-        const { name, value} = event.target;
-        if (name === "job")
-            setPerson(
-                {name: person["name"], job: value}
-            );
-        else
-            setPerson(
-                {name: value, job: person["job"]}
-            );
-    }
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setPerson((prevPerson) => ({
+          ...prevPerson,
+          [name]: value,
+        }));
+      }
+      
 
-    function subtmitForm(){
-        props.handleSubmit(person);
-        setPerson({name: "", job: ""});   
-    }
+      function submitForm() {
+        if (person.password === person.passwordReentry) {
+          if (person.password.length >= 8) {
+            props.handleSubmit(person);
+            setPerson({
+              name: "",
+              username: "",
+              role: "",
+              password: "",
+              passwordReentry: "",
+            });
+          } else {
+            alert("Password must be at least 8 characters long!");
+          }
+        } else {
+          alert("Passwords do not match!");
+        }
+      }
+      
+      
 
     return (
         <form>
-            <label htmlFor="name">Name</label>
-            <input type = "button" value = "Submit" onClick = {subtmitForm} />
-            <input
-                type = "text"
-                name = "name"
-                _id = "name"
-                value = {person.name}
-                onChange = {handleChange} />
-            <label htmlFor="job">Job</label>
-            <input
-                type = "text"
-                name = "job"
-                _id = "job"
-                value = {person.job}
-                onChange = {handleChange} />
+          <label htmlFor="name">Full Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={person.name}
+            onChange={handleChange}
+          />
+      
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            value={person.username}
+            onChange={handleChange}
+          />
+      
+          <label htmlFor="role">Role</label>
+          <input
+            type="text"
+            name="role"
+            id="role"
+            value={person.role}
+            onChange={handleChange}
+          />
+      
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={person.password}
+            onChange={handleChange}
+          />
+      
+          <label htmlFor="passwordReentry">Re-enter Password</label>
+          <input
+            type="password"
+            name="passwordReentry"
+            id="passwordReentry"
+            value={person.passwordReentry}
+            onChange={handleChange}
+          />
+      
+          <input type="button" value="Submit" onClick={submitForm} />
         </form>
-    );
+      );
+      
 }
 
 

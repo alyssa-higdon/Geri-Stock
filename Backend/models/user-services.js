@@ -13,16 +13,16 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-async function getUsers(name, job) {
+async function getUsers(name, username) {
   let result;
-  if (name === undefined && job === undefined) {
+  if (name === undefined && username === undefined) {
     result = await userModel.find();
-  } else if (name && !job) {
+  } else if (name && !username) {
     result = await findUserByName(name);
-  } else if (job && !name) {
-    result = await findUserByJob(job);
+  } else if (username && !name) {
+    result = await findUserByUsername(username);
   } else if (name && job) {
-    result = await findUserByNameJob(name, job);
+    result = await findUserByNameUsername(name, username);
   }
   return result;
 }
@@ -51,13 +51,13 @@ async function findUserByName(name) {
   return await userModel.find({ name: name });
 }
 
-async function findUserByJob(job) {
-  return await userModel.find({ job: job });
+async function findUserByUsername(username) {
+  return await userModel.find({ username: username });
 };
 
-async function findUserByNameJob(name, job){
+async function findUserByNameUsername(name, username){
   name_result = await userModel.find({name : name});
-  result = name_result.filter( (user) => user['job'] === job);
+  result = name_result.filter( (user) => user['username'] === username);
   return result;
 };
 
