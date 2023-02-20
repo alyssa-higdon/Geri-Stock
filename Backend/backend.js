@@ -39,7 +39,7 @@ app.get('/users', (req, res) => {
     const username = req.query.username;
     if (name != undefined && username != undefined){
         let result = findUserByName(name);
-        let result1 = findUserByUsername(result, job);
+        let result1 = findUserByUsername(result, username);
 
         result1 = {users_list: result1};
         res.send(result1);
