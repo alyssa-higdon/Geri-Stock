@@ -36,10 +36,10 @@ async function findUserById(id) {
   }
 }
 
-async function addUser(user) {
+async function addUser(userOrItem) { //OrItem
   try {
-    const userToAdd = new userModel(user);
-    const savedUser = await userToAdd.save();
+    const userOrItemToAdd = new userModel(userOrItem);
+    const savedUser = await userOrItemToAdd.save();
     return savedUser;
   } catch (error) {
     console.log(error);

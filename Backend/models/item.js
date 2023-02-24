@@ -7,31 +7,30 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    username: {
-      type: String,
+    quantity: {
+      type: Number,
       required: true,
-      trim: true,
-      unique: true,
     },
-    role: {
-      type: String,
+    date: {
+      type: Date,
       required: true,
       trim: true,
     },
-    password: {
+    notes: {
       type: String,
       required: true,
       trim: true,
-      validate(value) {
-        if (value.length < 8)
-          throw new Error("Invalid password, must be at least 8 characters.");
-      }
     },
-    id : {
-      type : Number
+    tags : {
+        type: List[String],
+        required: false,
+    },
+    userID : {
+        type: Number
     }
+
   },
-  { collection: "users_list" }
+  { collection: "items_list" }
 );
 
 
