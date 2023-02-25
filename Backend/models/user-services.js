@@ -36,11 +36,11 @@ async function findUserById(id) {
   }
 }
 
-async function addUser(userOrItem) { //OrItem
+async function addUserOrItem(userOrItem) { //OrItem
   try {
     const userOrItemToAdd = new userModel(userOrItem);
-    const savedUser = await userOrItemToAdd.save();
-    return savedUser;
+    const savedUserOrItem = await userOrItemToAdd.save();
+    return savedUserOrItem;
   } catch (error) {
     console.log(error);
     return false;
@@ -72,5 +72,5 @@ async function deleteUserId(id){
 
 exports.getUsers = getUsers;
 exports.findUserById = findUserById;
-exports.addUser = addUser;
+exports.addUserOrItem = addUserOrItem;
 exports.deleteUserId = deleteUserId;

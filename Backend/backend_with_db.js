@@ -110,7 +110,7 @@ app.get('/items/:id', async (req, res) => {
 ////////////////////////////////////////////////////
 app.post('/users', async (req, res) => {
     const user = req.body;
-    const savedUser = await userServices.addUser(user);
+    const savedUser = await userServices.addUserorItem(user);
     if (savedUser)
         res.status(201).send(savedUser);
     else
