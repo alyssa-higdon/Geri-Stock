@@ -37,6 +37,7 @@ app.get('/:users_items', async (req, res) => {
 
     try {
         const result = await userServices.getUsersOrItems(name, username, users_items);
+        console.log(result);
         res.send({users_items : result});
 
     } catch (error) {
@@ -100,7 +101,6 @@ app.post('/:users_items', async (req, res) => {
     else
         res.status(500).end();
 });
-
 
 
 

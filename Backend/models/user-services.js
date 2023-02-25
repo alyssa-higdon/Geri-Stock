@@ -19,6 +19,7 @@ async function getUsersOrItems(name, username, userOrItemType) {
   if (name === undefined && username === undefined) {
     if (userOrItemType == "users"){
       result = await userModel.find();
+      console.log("cat");
     }
     else if (userOrItemType == "items"){
       result = await itemModel.find();
