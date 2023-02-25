@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const userModel = require("./user");
+const itemModel = require("./item");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -36,11 +37,26 @@ async function findUserById(id) {
   }
 }
 
-async function addUserOrItem(userOrItem) { //OrItem
+async function addUserOrItem(userOrItem, userOrItemType) {
+  console.log(userOrItemType)
   try {
-    const userOrItemToAdd = new userModel(userOrItem);
-    const savedUserOrItem = await userOrItemToAdd.save();
-    return savedUserOrItem;
+    if (userOrItemType == "users"){
+      const userOrItemToAdd = new userModel(userOrItem);
+      const savedUserOrItem = await userOrItemToAdd.save();
+      return savedUserOrItem;
+    }
+    else if (userOrItemType == "items"){
+      const userOrItemToAdd = new itemModel(userOrItem);
+      const savedUserOrItem = await userOrItemToAdd.save();
+      return savedUserOrItem;
+    }
+    else{
+      console.log("Error: wrong users or items type");
+      return false;
+    }
+    // const savedUserOrItem = await userOrItemToAdd.save();
+    // return savedUserOrItem;
+    return false;
   } catch (error) {
     console.log(error);
     return false;

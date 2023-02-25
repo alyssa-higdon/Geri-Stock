@@ -21,6 +21,7 @@ function ItemForm(props){
         props.handleSubmit(item);
         setItem({
           name: "",
+          quantity: "",
           tag: "",
           notes: ""
         });
@@ -38,7 +39,16 @@ function ItemForm(props){
             value={item.name}
             onChange={handleChange}
           />
-      
+         <label htmlFor="name">Quantity</label>
+          <input
+            type="text"
+            name="quantity"
+            id="quantity"
+            value={item.quantity}
+            onChange={handleChange}
+          />
+
+
           <label htmlFor="tag">Tag</label>
           <input
             type="text"

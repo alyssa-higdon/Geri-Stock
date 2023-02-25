@@ -108,24 +108,40 @@ app.get('/items/:id', async (req, res) => {
 
 
 ////////////////////////////////////////////////////
-app.post('/users', async (req, res) => {
-    const user = req.body;
-    const savedUser = await userServices.addUserorItem(user);
-    if (savedUser)
-        res.status(201).send(savedUser);
+app.post('/:users_items', async (req, res) => {
+    const userOrItemType = req.params['users_items']
+    console.log("cat");
+    console.log(userOrItemType);
+    console.log("dog");
+    const userOrItemInfo = req.body;
+    console.log(userOrItemInfo);
+
+
+    userOrItemInfo.id = Date.now();
+    userOrItemInfo.date = new Date(0);
+    userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
+
+    //userOrItemInfo.date = temp;
+
+
+    const savedUserOrItem = await userServices.addUserOrItem(userOrItemInfo, userOrItemType);
+    
+    if (savedUserOrItem)
+        res.status(201).send(savedUserOrItem);
     else
         res.status(500).end();
 });
 
 
-app.post('/items', async (req, res) => {
-    const item = req.body;
-    const savedItem = await userServices.addItem(item);
-    if (savedItem)
-        res.status(201).send(savedItem);
-    else
-        res.status(500).end();
-});
+// app.post('/items', async (req, res) => {
+//     const item = req.body;
+//     const savedItem = await userServices.addItem(item);
+//     if (savedItem)
+//         res.status(201).send(savedItem);
+//     else
+//         res.status(500).end();
+// });
+
 
 
 
@@ -144,13 +160,6 @@ app.delete('/users/:id', async (req, res) => {
 function findItemById(id) {
     return items['items_list'].find( (item) => item['id'] === id);
 }
-
-app.post('/items', async (req, res) => {
-    const itemToAdd = req.body;
-    itemToAdd.id = Date.now();
-    addItem(itemToAdd);
-    res.status(201).send(itemToAdd).end();
-});
 
 function addItem(item){
     items['items_list'].push(item);

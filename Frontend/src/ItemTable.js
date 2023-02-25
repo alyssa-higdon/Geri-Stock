@@ -3,6 +3,7 @@ function TableHeader()  {
     <thead>
       <tr>
         <th>Name</th>
+        <th>Quantity</th>
         <th>Tag</th>
         <th>Id</th>
       </tr>
@@ -15,6 +16,7 @@ function TableBody(props) {
     return (
       <tr key={index}>
       <td>{row.name}</td>
+      <td>{row.quantity}</td>
       <td>{row.tag}</td>
       <td>{row._id}</td>
       <td>

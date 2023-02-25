@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema(
+const ItemSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
       trim: true,
     },
     tags : {
-        type: List[String],
+        type: Array,
         required: false,
     },
     userID : {
