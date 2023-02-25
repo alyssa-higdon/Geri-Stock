@@ -66,6 +66,15 @@ function ItemForm(props){
             value={item.notes}
             onChange={handleChange}
           />
+
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            value={item.username}
+            onChange={handleChange}
+          />
       
           <input type="button" value="Submit" onClick={submitForm} />
         </form>

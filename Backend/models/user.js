@@ -27,9 +27,9 @@ const UserSchema = new mongoose.Schema(
           throw new Error("Invalid password, must be at least 8 characters.");
       }
     },
-    id : {
-      type : Number
-    }
+    // id : {
+    //   type : Number
+    // }
   },
   { collection: "users_list" }
 );

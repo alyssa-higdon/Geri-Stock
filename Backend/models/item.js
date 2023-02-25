@@ -6,6 +6,7 @@ const ItemSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      // unique: true because multiple users can have apples
     },
     quantity: {
       type: Number,
@@ -25,8 +26,10 @@ const ItemSchema = new mongoose.Schema(
         type: Array,
         required: false,
     },
-    userID : {
-        type: Number
+    username : {
+        type: String,
+        required: true,
+        trim: true,
     }
 
   },

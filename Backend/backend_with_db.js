@@ -22,21 +22,6 @@ client.connect(err => {
 const app = express();
 const port = 5001;
 
-const items = { 
-    items_list :
-    [
-       { 
-          id : 'xyz789',
-          name : 'Apple',
-          tag: 'grocery',
-       },
-       {
-          id : 'abc123', 
-          name: 'Peanut',
-          tag: 'grocery',
-       }
-    ]
- }
 
 app.use(cors());
 app.use(express.json());
@@ -48,22 +33,12 @@ app.get('/', (req, res) => {
 app.get('/:users_items', async (req, res) => {
     const users_items = req.params['users_items']
     const name = req.query['name'];
-    const username = req.query['username'];
-    
+    username = req.query['username'];
+
     try {
-        if (users_items == "users"){
-            const result = await userServices.getUsers(name, username);
-            res.send({users_list: result});
-        }         
-        else if (users_items == " items"){
-            if (name != undefined){
-                let result = findItemByName(name);
-                res.send({items_list: result});
-            }
-            else{
-                res.send(items);
-            }
-        }
+        const result = await userServices.getUsersOrItems(name, username, users_items);
+        res.send({users_items : result});
+
     } catch (error) {
         console.log(error);
         res.status(500).send('An error ocurred in the server.');
@@ -110,37 +85,21 @@ app.get('/items/:id', async (req, res) => {
 ////////////////////////////////////////////////////
 app.post('/:users_items', async (req, res) => {
     const userOrItemType = req.params['users_items']
-    console.log("cat");
-    console.log(userOrItemType);
-    console.log("dog");
     const userOrItemInfo = req.body;
-    console.log(userOrItemInfo);
-
-
-    userOrItemInfo.id = Date.now();
-    userOrItemInfo.date = new Date(0);
-    userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
-
+    //userOrItemInfo.id = Date.now();
+    if (userOrItemType == "items"){
+        userOrItemInfo.id = Date.now();
+        userOrItemInfo.date = new Date(0);
+        userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
+    }
     //userOrItemInfo.date = temp;
 
-
     const savedUserOrItem = await userServices.addUserOrItem(userOrItemInfo, userOrItemType);
-    
     if (savedUserOrItem)
         res.status(201).send(savedUserOrItem);
     else
         res.status(500).end();
 });
-
-
-// app.post('/items', async (req, res) => {
-//     const item = req.body;
-//     const savedItem = await userServices.addItem(item);
-//     if (savedItem)
-//         res.status(201).send(savedItem);
-//     else
-//         res.status(500).end();
-// });
 
 
 
