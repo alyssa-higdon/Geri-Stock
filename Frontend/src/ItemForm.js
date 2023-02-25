@@ -23,7 +23,8 @@ function ItemForm(props){
           name: "",
           quantity: "",
           tag: "",
-          notes: ""
+          notes: "",
+          username: ""
         });
       }
       
