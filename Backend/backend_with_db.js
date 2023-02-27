@@ -87,9 +87,9 @@ app.get('/items/:id', async (req, res) => {
 app.post('/:users_items', async (req, res) => {
     const userOrItemType = req.params['users_items']
     const userOrItemInfo = req.body;
-    //userOrItemInfo.id = Date.now();
+    userOrItemInfo.id = Date.now();
     if (userOrItemType == "items"){
-        userOrItemInfo.id = Date.now();
+        //userOrItemInfo.id = Date.now();
         userOrItemInfo.date = new Date(0);
         userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
     }
