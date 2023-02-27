@@ -19,7 +19,9 @@ function MyApp(){
   const [items, setItems] = useState([]);
   
   useEffect(() => {
+    console.log("use effect");
     fetchAllItems().then( result => {
+      console.log(result);
        if (result)
           setItems(result);
      });
@@ -61,7 +63,7 @@ function updateUserList(person) {
 async function fetchAllUsers(){
   try{
     const responce = await axios.get('http://localhost:5001/users');
-    return responce.data.users_list;
+    return responce.data.users_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -117,8 +119,10 @@ function updateItemList(item) {
 
 async function fetchAllItems(){
   try{
+    console.log("fecthed All items");
     const responce = await axios.get('http://localhost:5001/items');
-    return responce.data.items_list;
+    console.log(responce);
+    return responce.data.users_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.

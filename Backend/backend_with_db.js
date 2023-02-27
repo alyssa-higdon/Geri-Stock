@@ -22,39 +22,29 @@ client.connect(err => {
 const app = express();
 const port = 5001;
 
-const items = { 
-    items_list :
-    [
-       { 
-          id : 'xyz789',
-          name : 'Apple',
-          tag: 'grocery',
-       },
-       {
-          id : 'abc123', 
-          name: 'Peanut',
-          tag: 'grocery',
-       }
-    ]
- }
 
 app.use(cors());
 app.use(express.json());
-
+//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/users', async (req, res) => {
+app.get('/:users_items', async (req, res) => {
+    const users_items = req.params['users_items']
     const name = req.query['name'];
-    const username = req.query['username'];
+    username = req.query['username'];
+
     try {
-        const result = await userServices.getUsers(name, username);
-        res.send({users_list: result});         
+        const result = await userServices.getUsersOrItems(name, username, users_items);
+        console.log(result);
+        res.send({users_items : result});
+
     } catch (error) {
         console.log(error);
         res.status(500).send('An error ocurred in the server.');
     }
+
 });
 
 app.get('/users/:id', async (req, res) => {
@@ -67,38 +57,19 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
-app.post('/users', async (req, res) => {
-    const user = req.body;
-    const savedUser = await userServices.addUser(user);
-    if (savedUser)
-        res.status(201).send(savedUser);
-    else
-        res.status(500).end();
-});
+//add item stuff idk
+// app.get('/items', async (req, res) => {
+//     const name = req.query['name'];
+//     if (name != undefined){
+//         let result = findItemByName(name);
 
-app.delete('/users/:id', async (req, res) => {
-    const id = req.params["id"];
-    const deletedUser = await userServices.deleteUserId(id);
-    if (deletedUser)
-        res.status(204).end();
-    else
-        res.status(404).end();
-    
-})
-
-// add item stuff idk
-app.get('/items', async (req, res) => {
-    const name = req.query['name'];
-    if (name != undefined){
-        let result = findItemByName(name);
-
-        result = {items_list: result};
-        res.send(result);
-    }
-    else{
-        res.send(items);
-    }
-});
+//         result = {items_list: result};
+//         res.send(result);
+//     }
+//     else{
+//         res.send(items);
+//     }
+// });
 
 app.get('/items/:id', async (req, res) => {
     const id = req.params['id']; //or req.params.id
@@ -111,16 +82,43 @@ app.get('/items/:id', async (req, res) => {
     }
 });
 
+
+////////////////////////////////////////////////////
+app.post('/:users_items', async (req, res) => {
+    const userOrItemType = req.params['users_items']
+    const userOrItemInfo = req.body;
+    userOrItemInfo.id = Date.now();
+    if (userOrItemType == "items"){
+        //userOrItemInfo.id = Date.now();
+        userOrItemInfo.date = new Date(0);
+        userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
+    }
+    //userOrItemInfo.date = temp;
+
+    const savedUserOrItem = await userServices.addUserOrItem(userOrItemInfo, userOrItemType);
+    if (savedUserOrItem)
+        res.status(201).send(savedUserOrItem);
+    else
+        res.status(500).end();
+});
+
+
+
+////////////////////////////////////////////////////
+app.delete('/users/:id', async (req, res) => {
+    const id = req.params["id"];
+    const deletedUser = await userServices.deleteUserId(id);
+    if (deletedUser)
+        res.status(204).end();
+    else
+        res.status(404).end();
+    
+})
+
+/////////////////////////////////////////////////////
 function findItemById(id) {
     return items['items_list'].find( (item) => item['id'] === id);
 }
-
-app.post('/items', async (req, res) => {
-    const itemToAdd = req.body;
-    itemToAdd.id = Date.now();
-    addItem(itemToAdd);
-    res.status(201).send(itemToAdd).end();
-});
 
 function addItem(item){
     items['items_list'].push(item);

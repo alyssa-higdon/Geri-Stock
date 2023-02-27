@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+var SHA256 = require("crypto-js/sha256");
 
 function UserForm(props){
     const [person, setPerson] = useState(
@@ -22,6 +23,7 @@ function UserForm(props){
       function submitForm() {
         if (person.password === person.passwordReentry) {
           if (person.password.length >= 8) {
+            person.password = String(SHA256(person.password));
             props.handleSubmit(person);
             setPerson({
               name: "",

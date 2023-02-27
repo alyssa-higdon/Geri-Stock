@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const userModel = require("./user");
+const itemModel = require("./item");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -13,19 +14,26 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-async function getUsers(name, username) {
+async function getUsersOrItems(name, username, userOrItemType) {
   let result;
   if (name === undefined && username === undefined) {
-    result = await userModel.find();
+    if (userOrItemType == "users"){
+      result = await userModel.find();
+      console.log("cat");
+    }
+    else if (userOrItemType == "items"){
+      result = await itemModel.find();
+    }
   } else if (name && !username) {
-    result = await findUserByName(name);
+    result = await findUserOrItemByName(name, userOrItemType);
   } else if (username && !name) {
-    result = await findUserByUsername(username);
-  } else if (name && job) {
+    result = await findUserByUsername(username, userOrItemType);
+  } else if (name && username) {
     result = await findUserByNameUsername(name, username);
   }
   return result;
 }
+
 
 async function findUserById(id) {
   try {
@@ -36,27 +44,57 @@ async function findUserById(id) {
   }
 }
 
-async function addUser(user) {
+async function addUserOrItem(userOrItem, userOrItemType) {
+  console.log(userOrItemType)
   try {
-    const userToAdd = new userModel(user);
-    const savedUser = await userToAdd.save();
-    return savedUser;
+    if (userOrItemType == "users"){
+      const userOrItemToAdd = new userModel(userOrItem);
+      const savedUserOrItem = await userOrItemToAdd.save();
+      return savedUserOrItem;
+    }
+    else if (userOrItemType == "items"){
+      const userOrItemToAdd = new itemModel(userOrItem);
+      const savedUserOrItem = await userOrItemToAdd.save();
+      return savedUserOrItem;
+    }
+    else{
+      console.log("Error: wrong users or items type");
+      return false;
+    }
+    // const savedUserOrItem = await userOrItemToAdd.save();
+    // return savedUserOrItem;
+    return false;
   } catch (error) {
     console.log(error);
     return false;
   }
 }
 
-async function findUserByName(name) {
-  return await userModel.find({ name: name });
+async function findUserOrItemByName(name, userOrItemType) {
+  if (userOrItemType == "users"){
+    return await userModel.find({ name: name });
+  }
+  else if (userOrItemType == "items"){
+    return await itemModel.find({ name: name });
+  }
 }
 
-async function findUserByUsername(username) {
-  return await userModel.find({ username: username });
+async function findUserByUsername(username, userOrItemType) {
+  if (userOrItemType == "users"){
+    return await userModel.find({ username: username });
+  }
+  else if (userOrItemType == "items"){
+    return await itemModel.find({ uesrname: username });
+  }
 };
 
-async function findUserByNameUsername(name, username){
-  name_result = await userModel.find({name : name});
+async function findUserByNameUsername(name, username, userOrItemType){
+  if (userOrItemType == "users"){
+    name_result = await userModel.find({name : name});
+  }
+  else if (userOrItemType == "items"){
+    name_result = await itemModel.find({name : name});
+  }
   result = name_result.filter( (user) => user['username'] === username);
   return result;
 };
@@ -70,7 +108,7 @@ async function deleteUserId(id){
   // }
 }
 
-exports.getUsers = getUsers;
+exports.getUsersOrItems = getUsersOrItems;
 exports.findUserById = findUserById;
-exports.addUser = addUser;
+exports.addUserOrItem = addUserOrItem;
 exports.deleteUserId = deleteUserId;
