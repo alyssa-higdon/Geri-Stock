@@ -125,6 +125,16 @@ app.delete('/users/:id', async (req, res) => {
     
 })
 
+app.delete('/items/:id', async (req, res) => {
+  const id = req.params["id"];
+  const deletedItem = await userServices.deleteItemId(id);
+  if (deletedItem)
+      res.status(204).end();
+  else
+      res.status(404).end();
+  
+})
+
 /////////////////////////////////////////////////////
 function findItemById(id) {
     return items['items_list'].find( (item) => item['id'] === id);

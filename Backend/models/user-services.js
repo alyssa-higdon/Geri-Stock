@@ -108,6 +108,15 @@ async function deleteUserId(id){
   // }
 }
 
+async function deleteItemId(id){
+  const result = await itemModel.findByIdAndDelete(id);
+  return result;
+  // const user_index = await userModel.findIndex( (user) => user['id'] === id);
+  // if (user_index > -1 && user_index != undefined && user_index.length !== 0){
+
+  // }
+}
+
 exports.getUsersOrItems = getUsersOrItems;
 exports.findUserById = findUserById;
 exports.addUserOrItem = addUserOrItem;
