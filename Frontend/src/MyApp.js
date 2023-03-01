@@ -3,6 +3,7 @@ import UserTable from './UserTable';
 import ItemTable from './ItemTable';
 import UserForm from './UserForm';
 import ItemForm from './ItemForm';
+import LogInForm from './LogInForm';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 
@@ -161,7 +162,10 @@ return (
             <Link to="/users-table">List all USERS</Link>
           </li>
           <li>
-            <Link to="/user-form">Insert a USER</Link>
+            <Link to="/user-form">Sign Up</Link>
+          </li>
+          <li> 
+            <Link to="/login-form">Log In</Link>
           </li>
           <li>
             <Link to="/items-table">List all ITEMS</Link>
@@ -192,7 +196,9 @@ return (
             />
           }
         />
-        <Route path="/item-form" element={<ItemForm handleSubmit={updateItemList} />} />        
+        <Route path="/item-form" element={<ItemForm handleSubmit={updateItemList} />} />   
+        <Route path="/login-form" element={<LogInForm />} /> {/* add a new route */}
+     
       </Routes>
     </BrowserRouter>
   </div>
