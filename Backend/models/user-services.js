@@ -121,3 +121,4 @@ exports.getUsersOrItems = getUsersOrItems;
 exports.findUserById = findUserById;
 exports.addUserOrItem = addUserOrItem;
 exports.deleteUserId = deleteUserId;
+exports.deleteItemId = deleteItemId;
