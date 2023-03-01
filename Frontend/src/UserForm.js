@@ -8,6 +8,7 @@ function UserForm(props){
             username: "",
             password: "",
             role: "",
+            passwordReentry: "",
         }
     );
     
