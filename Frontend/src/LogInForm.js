@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 
+
 function LogInForm(props){
     const [person, setPerson] = useState(
         {
-            name: "",
+            _id: "",
             username: "",
             password: "",
+            salt: "",
         }
     );
     
@@ -18,11 +20,14 @@ function LogInForm(props){
       }
       
 
-      function submitForm() {
+      async function submitForm() {
+        props.handleSubmit(person);
         setPerson({
-            username: "",
-            password: "",
-          });
+          _id: "",
+          username: "",
+          password: "",
+          salt: "",
+        });
       }
       
       

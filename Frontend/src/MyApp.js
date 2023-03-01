@@ -6,6 +6,8 @@ import ItemForm from './ItemForm';
 import LogInForm from './LogInForm';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+const CryptoJS = require('crypto-js');
+
 
 //////
 function MyApp(){
@@ -144,6 +146,32 @@ async function makeItemPostCall(item){
   }
 }
 
+async function loginUser(person) {
+  try {
+      console.log("Username: " + String(person.username));
+      const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
+      console.log("RESPONSE" + JSON.stringify(response));
+      const responseData = response.data.users_items[0];
+      const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
+      console.log("ID: " + String(responseData._id));
+      console.log("Password: " + String(person.password));
+      console.log("Salt: " + String(responseData.salt));
+      console.log("Stored password: " + responseData.password);      
+
+      if (hashedPass === responseData.password) {
+          console.log("Logged In");
+      } else {
+          console.log("Incorrect password");
+      }
+      return response;
+  } catch (error) {
+      console.log("FAILLL");
+      console.log(error);
+      return false;
+  }
+}
+
+
 
 
 return (
@@ -197,7 +225,7 @@ return (
           }
         />
         <Route path="/item-form" element={<ItemForm handleSubmit={updateItemList} />} />   
-        <Route path="/login-form" element={<LogInForm />} /> {/* add a new route */}
+        <Route path="/login-form" element={<LogInForm handleSubmit={loginUser}/>} />
      
       </Routes>
     </BrowserRouter>
