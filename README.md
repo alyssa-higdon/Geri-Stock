@@ -19,6 +19,7 @@
      - From your root directory, go to ```.git/hooks/pre-commit```.sample
      - Replace the contents of the file with the contents of ```pre-commit.txt``` in the root of this GitHub
      - Rename ```pre-commit.sample``` to ```pre-commit```
+4) To run eslint, run ```npm run lint``` in terminal
 
 ## Style Guides
 1) ESLint and Prettier
