@@ -80,6 +80,9 @@ async function makeUserPostCall(person){
   try {
      const response = await axios.post('http://localhost:5001/users', person);
      window.alert("Successfully created an account");
+     if(window.loggedIn) {
+      console.log("Already logged in");
+     }
      return response;
   }
   catch (error) {
@@ -162,6 +165,11 @@ async function loginUser(person) {
 
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
+          window.loggedIn = true;
+          window.loggedInUsername = person.username;
+          window.loggedInName = responseData.name;
+          window.loggedInRole = responseData.role;
+          console.log(window.loggedIn);
       } else {
           window.alert("Incorrect password or incorrect username");
       }
