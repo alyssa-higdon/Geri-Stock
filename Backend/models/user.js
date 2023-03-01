@@ -27,6 +27,11 @@ const UserSchema = new mongoose.Schema(
           throw new Error("Invalid password, must be at least 8 characters.");
       }
     },
+    salt: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     // id : {
     //   type : Number
     // }

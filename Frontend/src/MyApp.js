@@ -3,8 +3,11 @@ import UserTable from './UserTable';
 import ItemTable from './ItemTable';
 import UserForm from './UserForm';
 import ItemForm from './ItemForm';
+import LogInForm from './LogInForm';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+const CryptoJS = require('crypto-js');
+
 
 //////
 function MyApp(){
@@ -76,10 +79,15 @@ async function fetchAllUsers(){
 async function makeUserPostCall(person){
   try {
      const response = await axios.post('http://localhost:5001/users', person);
+     window.alert("Successfully created an account");
+     if(window.loggedIn) {
+      console.log("Already logged in");
+     }
      return response;
   }
   catch (error) {
      console.log(error);
+     window.alert("Username already in use");
      return false;
   }
 }
@@ -143,6 +151,37 @@ async function makeItemPostCall(item){
   }
 }
 
+async function loginUser(person) {
+  try {
+      const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
+      const responseData = response.data.users_items[0];
+      const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
+      /*
+      console.log("ID: " + String(responseData._id));
+      console.log("Password: " + String(person.password));
+      console.log("Salt: " + String(responseData.salt));
+      console.log("Stored password: " + responseData.password);      
+      */
+
+      if (hashedPass === responseData.password) {
+          window.alert("Logged In. Hello, " + responseData.name);
+          window.loggedIn = true;
+          window.loggedInUsername = person.username;
+          window.loggedInName = responseData.name;
+          window.loggedInRole = responseData.role;
+          console.log(window.loggedIn);
+      } else {
+          window.alert("Incorrect password or incorrect username");
+      }
+      return response;
+  } catch (error) {
+      window.alert("Incorrect password or incorrect username");
+      console.log(error);
+      return false;
+  }
+}
+
+
 
 
 return (
@@ -161,7 +200,10 @@ return (
             <Link to="/users-table">List all USERS</Link>
           </li>
           <li>
-            <Link to="/user-form">Insert a USER</Link>
+            <Link to="/user-form">Sign Up</Link>
+          </li>
+          <li> 
+            <Link to="/login-form">Log In</Link>
           </li>
           <li>
             <Link to="/items-table">List all ITEMS</Link>
@@ -192,7 +234,9 @@ return (
             />
           }
         />
-        <Route path="/item-form" element={<ItemForm handleSubmit={updateItemList} />} />        
+        <Route path="/item-form" element={<ItemForm handleSubmit={updateItemList} />} />   
+        <Route path="/login-form" element={<LogInForm handleSubmit={loginUser}/>} />
+     
       </Routes>
     </BrowserRouter>
   </div>
