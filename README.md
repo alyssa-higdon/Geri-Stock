@@ -2,7 +2,8 @@
 
 ## Instructions
 1) git clone https://github.com/alyssa-higdon/Geri-Stock
-2) npm install
+2) ```npm install```
+3) ```npm install crypto-js```
 
 ## To run
 1) Go into the Backend folder
