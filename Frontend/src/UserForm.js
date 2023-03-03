@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-var SHA256 = require("crypto-js/sha256");
+const CryptoJS = require('crypto-js');
 
 function UserForm(props){
     const [person, setPerson] = useState(
@@ -8,6 +8,7 @@ function UserForm(props){
             username: "",
             password: "",
             role: "",
+            passwordReentry: "",
         }
     );
     
@@ -23,7 +24,9 @@ function UserForm(props){
       function submitForm() {
         if (person.password === person.passwordReentry) {
           if (person.password.length >= 8) {
-            person.password = String(SHA256(person.password));
+            var salt = CryptoJS.lib.WordArray.random(16).toString();
+            person.salt = salt;
+            person.password = String(CryptoJS.SHA256(person.password + salt));
             props.handleSubmit(person);
             setPerson({
               name: "",

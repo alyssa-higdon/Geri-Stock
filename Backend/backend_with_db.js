@@ -57,6 +57,16 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
+app.get('/users/', async (req, res) => {
+    const username = req.params['username'];
+    const result = await userServices.findUserByUsername(username, "users");
+    if (result === undefined || result === null)
+        res.status(404).send('Resource not found.');
+    else {
+        res.send({users_list: result});
+    }
+});
+
 //add item stuff idk
 // app.get('/items', async (req, res) => {
 //     const name = req.query['name'];
@@ -113,6 +123,16 @@ app.delete('/users/:id', async (req, res) => {
     else
         res.status(404).end();
     
+})
+
+app.delete('/items/:id', async (req, res) => {
+  const id = req.params["id"];
+  const deletedItem = await userServices.deleteItemId(id);
+  if (deletedItem)
+      res.status(204).end();
+  else
+      res.status(404).end();
+  
 })
 
 /////////////////////////////////////////////////////
