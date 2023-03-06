@@ -175,12 +175,7 @@ async function loginUser(person) {
 
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
-          window.loggedIn = true;
-          window.loggedInUsername = person.username;
-          window.loggedInName = responseData.name;
-          window.loggedInRole = responseData.role;
           document.cookie = "auth_cookie=name="+responseData.name+"&username="+person.username+"&role="+responseData.role;
-          console.log(window.loggedIn);
       } else {
           window.alert("Incorrect password or incorrect username");
       }
