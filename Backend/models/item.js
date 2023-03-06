@@ -19,7 +19,7 @@ const ItemSchema = new mongoose.Schema(
     },
     notes: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     tags : {
