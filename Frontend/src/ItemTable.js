@@ -1,3 +1,7 @@
+import ReadOnlyRow from "./components/ReadOnlyRow";
+//import EditableRow from "./components/EditableRow";
+//import React, { Fragment } from "react";
+
 function TableHeader()  {
   return (
     <thead>
@@ -14,17 +18,10 @@ function TableHeader()  {
 
 function TableBody(props) {
   const rows = props.itemData.map((row, index) => {
+    
     return (
-      <tr key={index}>
-      <td>{row.name}</td>
-      <td>{row.quantity}</td>
-      <td>{row.tag}</td>
-      <td>{row._id}</td>
-      <td>{row.username}</td>
-      <td>
-        <button onClick={() => props.removeItem(index)}>Delete</button>
-      </td>
-    </tr>
+      //<EditableRow props={props} row={row} index={index}/>
+      <ReadOnlyRow props={props} row={row} index={index}/>
     );
    }
   );
@@ -39,7 +36,7 @@ function ItemTable(props) {
   return (
     <table>
       <TableHeader />
-      <TableBody itemData={props.itemData} removeItem = {props.removeitem} />
+      <TableBody itemData={props.itemData} editItem = {props.edititem} removeItem = {props.removeitem} />
     </table>
   );
 }

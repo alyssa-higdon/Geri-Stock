@@ -1,32 +1,32 @@
 import React, {useState} from "react";
 
-function ItemForm(props){
-  const [item, setItem] = useState(
-      {
-          name: "",
-          role: "",
-      }
-  );
+function ItemEdit(props){
+    const [item, setItem] = useState(
+        {
+            name: "",
+            role: "",
+        }
+    );
     
     function handleChange(event) {
-      const { name, value } = event.target;
-      setItem((prevItem) => ({
-        ...prevItem,
-        [name]: value,
-      }));
-    }
+        const { name, value } = event.target;
+        setItem((prevItem) => ({
+          ...prevItem,
+          [name]: value,
+        }));
+      }
       
 
-    function submitForm() {
-      props.handleSubmit(item);
-      setItem({
-        name: "",
-        quantity: "",
-        tag: "",
-        notes: "",
-        username: ""
-      });
-    }
+      function submitForm() {
+        props.handleSubmit(item);
+        setItem({
+          name: "",
+          quantity: "",
+          tag: "",
+          notes: "",
+          username: ""
+        });
+      }
       
       
 
@@ -50,12 +50,12 @@ function ItemForm(props){
           />
 
 
-          <label htmlFor="tags">Tags</label>
+          <label htmlFor="tag">Tag</label>
           <input
             type="text"
-            name="tags"
-            id="tags"
-            value={item.tags}
+            name="tag"
+            id="tag"
+            value={item.tag}
             onChange={handleChange}
           />
       

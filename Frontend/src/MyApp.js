@@ -6,7 +6,6 @@ import ItemForm from './ItemForm';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 
-//////
 function MyApp(){
   const [characters, setCharacters] = useState([]);
   
@@ -29,6 +28,8 @@ function MyApp(){
   }, [] );
 
  
+// -------------- USER --------------
+
 function removeOneCharacter (index){
   makeUserDeleteCall(index).then(result => {
     if (result && result.status === 204){
@@ -37,8 +38,7 @@ function removeOneCharacter (index){
       });
       setCharacters(updated); 
     }
-  })
-  
+  }) 
 }
 
 async function makeUserDeleteCall(index){
@@ -64,7 +64,7 @@ function updateUserList(person) {
 async function fetchAllUsers(){
   try{
     const responce = await axios.get('http://localhost:5001/users');
-    return responce.data.users_items;
+    return responce.data.users_or_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -84,7 +84,7 @@ async function makeUserPostCall(person){
   }
 }
 
-// item stuff
+// -------------- ITEM --------------
 
 function removeOneItem (index){
   makeItemDeleteCall(index).then(result => {
@@ -95,7 +95,6 @@ function removeOneItem (index){
       setItems(updated); 
     }
   })
-  
 }
 
 async function makeItemDeleteCall(index){
@@ -123,7 +122,7 @@ async function fetchAllItems(){
     console.log("fecthed All items");
     const responce = await axios.get('http://localhost:5001/items');
     console.log(responce);
-    return responce.data.users_items;
+    return responce.data.users_or_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -143,6 +142,28 @@ async function makeItemPostCall(item){
   }
 }
 
+function updateOneItem (index){
+  makeItemPatchCall(index).then(result => {
+    if (result && result.status === 200){
+      const updated = items.filter((items, i) => {
+        return i !== index
+      });
+      setItems(updated); 
+    }
+  })
+}
+
+async function makeItemPatchCall(newInfo) { 
+  try {
+    const response = await axios.post('http://localhost:5001/items', newInfo);
+    return response;
+ }
+ catch (error) {
+    console.log(error);
+    return false;
+ }
+ 
+}
 
 
 return (
@@ -188,6 +209,7 @@ return (
           element={
             <ItemTable
               itemData={items}
+              edititem={updateOneItem}
               removeitem={removeOneItem}
             />
           }
