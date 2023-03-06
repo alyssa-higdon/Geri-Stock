@@ -168,10 +168,9 @@ function getLoggedInUser() {
 async function makeItemPostCall(item){
   try {
     let user_cookie = getCookie("auth_cookie");
-    console.log(user_cookie);
-    var decrypted_cookie = CryptoJS.AES.decrypt(user_cookie, "cat enthusiast");
-    console.log(decrypted_cookie);
-    //item.username = username;
+    var decrypted_cookie = CryptoJS.AES.decrypt(user_cookie, "cat enthusiast").toString(CryptoJS.enc.Utf8);
+    var username = decrypted_cookie.split('&')[1].substring(9, decrypted_cookie.split('&')[1].length);
+    item.username = username;
     const response = await axios.post('http://localhost:5001/items', item);
     return response;
   }
