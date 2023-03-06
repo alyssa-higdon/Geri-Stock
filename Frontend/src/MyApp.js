@@ -140,18 +140,38 @@ async function fetchAllItems(){
   }
 }
 
-function getLoggedInUser(cookie_name) {
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split('&');
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
   }
-  return cookies[1].substring(9,cookies[1].length);
+  return "";
 }
+/*
+function getLoggedInUser() {
+  var decrypt_cookie = CryptoJS.AES.decrypt(document.cookie, "cat enthusiast");
+  if (decrypt_cookie && decrypt_cookie !== '') {
+    console.log(decrypt_cookie);
+  }
+  return decrypt_cookie;
+}
+*/
 
 async function makeItemPostCall(item){
   try {
-    let username = getLoggedInUser("auth_cookie");
-    console.log(username);
-    item.username = username;
+    let user_cookie = getCookie("auth_cookie");
+    console.log(user_cookie);
+    var decrypted_cookie = CryptoJS.AES.decrypt(user_cookie, "cat enthusiast");
+    console.log(decrypted_cookie);
+    //item.username = username;
     const response = await axios.post('http://localhost:5001/items', item);
     return response;
   }
@@ -166,16 +186,10 @@ async function loginUser(person) {
       const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
       const responseData = response.data.users_items[0];
       const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
-      /*
-      console.log("ID: " + String(responseData._id));
-      console.log("Password: " + String(person.password));
-      console.log("Salt: " + String(responseData.salt));
-      console.log("Stored password: " + responseData.password);      
-      */
-
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
-          document.cookie = "auth_cookie=name="+responseData.name+"&username="+person.username+"&role="+responseData.role;
+          var plaintextCookie = "name="+responseData.name+"&username="+person.username+"&role="+responseData.role;
+          document.cookie = "auth_cookie="+CryptoJS.AES.encrypt(plaintextCookie, "cat enthusiast");
       } else {
           window.alert("Incorrect password or incorrect username");
       }
