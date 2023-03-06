@@ -140,10 +140,20 @@ async function fetchAllItems(){
   }
 }
 
+function getLoggedInUser(cookie_name) {
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split('&');
+  }
+  return cookies[1].substring(9,cookies[1].length);
+}
+
 async function makeItemPostCall(item){
   try {
-     const response = await axios.post('http://localhost:5001/items', item);
-     return response;
+    let username = getLoggedInUser("auth_cookie");
+    console.log(username);
+    item.username = username;
+    const response = await axios.post('http://localhost:5001/items', item);
+    return response;
   }
   catch (error) {
      console.log(error);
@@ -169,6 +179,7 @@ async function loginUser(person) {
           window.loggedInUsername = person.username;
           window.loggedInName = responseData.name;
           window.loggedInRole = responseData.role;
+          document.cookie = "auth_cookie=name="+responseData.name+"&username="+person.username+"&role="+responseData.role;
           console.log(window.loggedIn);
       } else {
           window.alert("Incorrect password or incorrect username");
