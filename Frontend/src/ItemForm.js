@@ -4,7 +4,10 @@ function ItemForm(props){
     const [item, setItem] = useState(
         {
             name: "",
-            role: "",
+            quantity: "",
+            tag: "",
+            notes: "",
+            
         }
     );
     
@@ -24,7 +27,6 @@ function ItemForm(props){
           quantity: "",
           tag: "",
           notes: "",
-          username: ""
         });
       }
       
@@ -68,15 +70,6 @@ function ItemForm(props){
             onChange={handleChange}
           />
 
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            value={item.username}
-            onChange={handleChange}
-          />
-      
           <input type="button" value="Submit" onClick={submitForm} />
         </form>
       );
