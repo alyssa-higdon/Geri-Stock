@@ -11,7 +11,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "material-ui-search-bar": "^1.0.0-beta.13"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,6 +54,8 @@
     "plugin:prettier/recommended"
   ],
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1"
   }
 }
