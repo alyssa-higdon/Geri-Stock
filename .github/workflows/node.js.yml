@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "min_max"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main"]
 
 
 defaults:
