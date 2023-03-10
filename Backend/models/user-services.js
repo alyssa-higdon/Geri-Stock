@@ -80,6 +80,7 @@ async function findUserOrItemByName(name, userOrItemType) {
 }
 
 async function findUserByUsername(username, userOrItemType) {
+  console.log("running2");
   if (userOrItemType == "users"){
     return await userModel.find({ username: username });
   }
@@ -120,5 +121,8 @@ async function deleteItemId(id){
 exports.getUsersOrItems = getUsersOrItems;
 exports.findUserById = findUserById;
 exports.addUserOrItem = addUserOrItem;
+exports.findUserOrItemByName = findUserOrItemByName;
+exports.findUserByUsername = findUserByNameUsername;
+exports.findUserByNameUsername = findUserByNameUsername;
 exports.deleteUserId = deleteUserId;
 exports.deleteItemId = deleteItemId;
