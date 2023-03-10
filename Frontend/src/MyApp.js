@@ -26,8 +26,7 @@ function MyApp(){
           setItems(result);
      });
   }, [] );
-
- 
+  
 // -------------- USER --------------
 
 function removeOneCharacter (index){
@@ -99,10 +98,10 @@ function removeOneItem (index){
 
 async function makeItemDeleteCall(index){
   try {
-     var _id = items[index]._id;
-     const response = await axios.delete('http://localhost:5001/items/' + _id);
-      return response;
-    }
+    var _id = items[index]._id;
+    const response = await axios.delete('http://localhost:5001/items/' + _id);
+    return response;
+  }
   catch (error) {
      console.log(error);
      return false;
@@ -119,7 +118,7 @@ function updateItemList(item) {
 
 async function fetchAllItems(){
   try{
-    console.log("fecthed All items");
+    console.log("fetched All items");
     const responce = await axios.get('http://localhost:5001/items');
     console.log(responce);
     return responce.data.users_or_items;
@@ -142,8 +141,8 @@ async function makeItemPostCall(item){
   }
 }
 
-function updateOneItem (index){
-  makeItemPatchCall(index).then(result => {
+function updateOneItem(index, newInfo){
+  makeItemPatchCall(index, newInfo).then(result => {
     if (result && result.status === 200){
       const updated = items.filter((items, i) => {
         return i !== index
@@ -153,16 +152,17 @@ function updateOneItem (index){
   })
 }
 
-async function makeItemPatchCall(newInfo) { 
+async function makeItemPatchCall(index, newInfo) { 
   try {
-    const response = await axios.post('http://localhost:5001/items', newInfo);
+    //console.log("newInfo:", newInfo);
+    var _id = items[index]._id;
+    const response = await axios.patch('http://localhost:5001/items/' + _id, newInfo);
     return response;
  }
  catch (error) {
     console.log(error);
     return false;
  }
- 
 }
 
 
@@ -211,6 +211,7 @@ return (
               itemData={items}
               edititem={updateOneItem}
               removeitem={removeOneItem}
+              handlesubmit={updateItemList} 
             />
           }
         />

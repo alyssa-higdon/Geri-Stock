@@ -1,6 +1,8 @@
 import ReadOnlyRow from "./components/ReadOnlyRow";
-//import EditableRow from "./components/EditableRow";
-//import React, { Fragment } from "react";
+import EditableRow from "./components/EditableRow";
+import React, { useState, Fragment } from "react";
+
+// still trying to figure out why all the rows turn into EditableRow
 
 function TableHeader()  {
   return (
@@ -17,11 +19,49 @@ function TableHeader()  {
 }
 
 function TableBody(props) {
-  const rows = props.itemData.map((row, index) => {
+  const [selectedItemData, setSelectedItemData] = useState({
+    name: "",
+    quantity: "",
+    tag: "",
+    notes: "",
+    username: ""
+  });
+
+  // the item (row) that has been chosen to edit
+  const [editRow, setEditRow] = useState(null);
+
+  const handleEditClick = (event, item) => {
+    event.preventDefault();
+    setEditRow(item.id);
     
+    setSelectedItemData({
+      name: item.name,
+      quantity: item.quantity,
+      tag: item.tag,
+      notes: item.notes,
+      username: item.username
+    });
+  }
+
+  const rows = props.itemData.map((row, index) => {
     return (
-      //<EditableRow props={props} row={row} index={index}/>
-      <ReadOnlyRow props={props} row={row} index={index}/>
+      <Fragment key={index}>
+        {editRow === row.id ? (
+          <EditableRow 
+            index={index} 
+            newItemData={selectedItemData}
+            setNewItemData={setSelectedItemData}
+            edit={props.editItem}
+          />
+        ) : (
+          <ReadOnlyRow 
+            row={row} 
+            index={index} 
+            handleChange={handleEditClick}
+            delete={props.removeItem}
+          />
+        )}
+      </Fragment>
     );
    }
   );
@@ -34,10 +74,16 @@ function TableBody(props) {
   
 function ItemTable(props) {
   return (
-    <table>
-      <TableHeader />
-      <TableBody itemData={props.itemData} editItem = {props.edititem} removeItem = {props.removeitem} />
-    </table>
+    <form>
+      <table>
+        <TableHeader />
+        <TableBody 
+          itemData={props.itemData} 
+          editItem={props.edititem} 
+          removeItem={props.removeitem} 
+        />
+      </table>
+    </form>
   );
 }
 

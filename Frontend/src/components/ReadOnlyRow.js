@@ -1,22 +1,21 @@
 import React from 'react';
 
-const ReadOnlyRow = ({ props, row, index }) => {
+function ReadOnlyRow(props){
+    
     return(
-        <div>
-            <tr key={index}>
-                <td>{row.name}</td>
-                <td>{row.quantity}</td>
-                <td>{row.tag}</td>
-                <td>{row._id}</td>
-                <td>{row.username}</td>
-                <td>
-                    <button onClick={() => props.editItem(index)}>Edit</button>
-                </td>
-                <td>
-                    <button onClick={() => props.removeItem(index)}>Delete</button>
-                </td>
-            </tr>
-        </div>
+        <tr key={props.index}>
+            <td>{props.row.name}</td>
+            <td>{props.row.quantity}</td>
+            <td>{props.row.tag}</td>
+            <td>{props.row._id}</td>
+            <td>{props.row.username}</td>
+            <td>
+                <button type="button" onClick={(event) => props.handleChange(event, props.row)}>Edit</button>
+            </td>
+            <td>
+                <button onClick={() => props.delete(props.index)}>Delete</button>
+            </td>
+        </tr>
     )
 }
 

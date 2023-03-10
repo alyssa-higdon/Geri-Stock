@@ -1,53 +1,68 @@
 import React from 'react';
 
-const EditableRow = ({ props, row, index }) => {
+function EditableRow(props){
+
+    function handleChange(event) {
+        //console.log(event.target);
+        const { name, value } = event.target;
+        props.setNewItemData((prevItem) => ({
+          ...prevItem,
+          [name]: value,
+        }));
+        //console.log(props.index, props.newItemData)
+    }
+
     return(
-        <div>
-            <tr key={index}>
-                <td>
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        value={row.name}
-                    ></input>
-                </td>
-                <td>
-                    <input 
-                        type="text"
-                        name="quantity"
-                        id="quantity"
-                        value={row.quantity}
-                    ></input>
-                </td>
-                <td>
-                    <input
-                        type="text"
-                        name="tags"
-                        id="tags"
-                        value={row.tags}
-                    ></input>
-                </td>
-                <td>
-                    <input
-                        type="text"
-                        name="notes"
-                        id="notes"
-                        value={row.notes}
-                    ></input>
-                </td>
-                <td>{row._id}</td>
-                <td>
-                    <input>{row.username}</input>
-                </td>
-                <td>
-                    <button onClick={() => props.editItem(index)}>Save</button>
-                </td>
-                <td>
-                    <button onClick={() => props.removeItem(index)}>Delete</button>
-                </td>
-            </tr>
-        </div>
+        <tr key={props.index}>
+            <td>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={props.newItemData.name}
+                    onChange={handleChange}
+                ></input>
+            </td>
+            <td>
+                <input 
+                    type="text"
+                    name="quantity"
+                    id="quantity"
+                    value={props.newItemData.quantity}
+                    onChange={handleChange}
+                ></input>
+            </td>
+            <td>
+                <input
+                    type="text"
+                    name="tags"
+                    id="tags"
+                    value={props.newItemData.tags}
+                    onChange={handleChange}
+                ></input>
+            </td>
+            <td>
+                <input
+                    type="text"
+                    name="notes"
+                    id="notes"
+                    value={props.newItemData.notes}
+                    onChange={handleChange}
+                ></input>
+            </td>
+            <td>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    value={props.newItemData.username}
+                    onChange={handleChange}
+                ></input>
+            </td>
+            <td>
+                <button onClick={() => {props.edit(props.index, props.newItemData)}}>Save</button>
+            </td>
+        </tr>
     )
 }
 
