@@ -8,9 +8,8 @@ mongoose.set("debug", true);
 mongoose.set('strictQuery', true);
 
 
-console.log(process.env.MONGO_USER+":");
 mongoose
-  .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
+  .connect("mongodb+srv://akhigdon:"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
