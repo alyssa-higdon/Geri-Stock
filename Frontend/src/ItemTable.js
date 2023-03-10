@@ -7,6 +7,8 @@ function TableHeader()  {
         <th>Tag</th>
         <th>Id</th>
         <th>Username</th>
+        <th>Minimum Quantity</th>
+        <th>Maximum Quantity</th>
       </tr>
     </thead>
   );
@@ -21,6 +23,8 @@ function TableBody(props) {
       <td>{row.tag}</td>
       <td>{row._id}</td>
       <td>{row.username}</td>
+      <td>{row.minquantity}</td>
+      <td>{row.maxquantity}</td>
       <td>
         <button onClick={() => props.removeItem(index)}>Delete</button>
       </td>
