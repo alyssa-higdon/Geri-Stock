@@ -5,6 +5,7 @@
 2) If you don't already have npm, install npm at this website ```https://nodejs.org/en/download/```
 3) ```npm install```
 4) ```npm install crypto-js```
+4) ```npm install jest```
 
 ## To run
 1) Go into the Backend folder
