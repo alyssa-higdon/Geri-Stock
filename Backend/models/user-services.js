@@ -7,6 +7,8 @@ dotenv.config();
 mongoose.set("debug", true);
 mongoose.set('strictQuery', true);
 
+
+console.log("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock")
 mongoose
   .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
     useNewUrlParser: true,
