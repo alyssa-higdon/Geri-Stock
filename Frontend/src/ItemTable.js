@@ -1,3 +1,36 @@
+import MyApp from "./MyApp"
+import SearchBar from "material-ui-search-bar";
+// firstname -> value
+async function makeTextEntry() {
+  console.log("inside makeTextEntry")
+  return (
+  <form><br>
+  Value to look for: <input type="text" id="value"/><br></br>
+  <input type="submit" value="Submit" onclick="formdata()"/></br>
+  </form>);
+}
+async function searchBox() {
+  return (<><nav><SearchBar
+    value={MyApp.searched}
+    onChange={(searchVal) => MyApp.requestSearch(searchVal)}
+    onCancelSearch={() => MyApp.cancelSearch()}
+  /></nav></>)
+}
+
+function FilterButtons(props, category, value)
+{
+  return (
+    <tr>
+    <td>
+      <button onClick={() => searchBox}>Filter by Quantity</button>
+      &nbsp;&nbsp;&nbsp;
+      <button onClick={() => searchBox}>Filter by Tags</button>
+    </td>
+  </tr>
+  );
+}
+
+
 function TableHeader()  {
   return (
     <thead>
@@ -34,13 +67,22 @@ function TableBody(props) {
        </tbody>
    );
 }
-  
+
 function ItemTable(props) {
   return (
+    <>
+    <nav><SearchBar
+    value={MyApp.searched}
+    onChange={(searchVal) => MyApp.requestSearch(searchVal)}
+    onCancelSearch={() => MyApp.cancelSearch()}
+  /></nav>
+    <table> <FilterButtons/> </table>
+
     <table>
       <TableHeader />
       <TableBody itemData={props.itemData} removeItem = {props.removeitem} />
     </table>
+    </>
   );
 }
 

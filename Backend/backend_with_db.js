@@ -98,6 +98,7 @@ app.post('/:users_items', async (req, res) => {
         //userOrItemInfo.id = Date.now();
         userOrItemInfo.date = new Date(0);
         userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
+        userOrItemInfo.username = "Joe";
     }
     //userOrItemInfo.date = temp;
 
