@@ -155,15 +155,6 @@ function getCookie(cname) {
   }
   return "";
 }
-/*
-function getLoggedInUser() {
-  var decrypt_cookie = CryptoJS.AES.decrypt(document.cookie, "cat enthusiast");
-  if (decrypt_cookie && decrypt_cookie !== '') {
-    console.log(decrypt_cookie);
-  }
-  return decrypt_cookie;
-}
-*/
 
 async function makeItemPostCall(item){
   try {
