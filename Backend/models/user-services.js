@@ -34,7 +34,7 @@ async function getUsersOrItems(name, username, userOrItemType) {
   return result;
 }
 
-
+// tested
 async function findUserById(id) {
   try {
     return await userModel.findById(id);
@@ -70,6 +70,7 @@ async function addUserOrItem(userOrItem, userOrItemType) {
   }
 }
 
+// tested
 async function findUserOrItemByName(theName, userOrItemType) {
   if (userOrItemType == "users"){
     return await userModel.findOne({ name: theName });
@@ -79,19 +80,19 @@ async function findUserOrItemByName(theName, userOrItemType) {
   }
 }
 
+// tested
 async function findUserByUsername(theUsername) {
   return await userModel.findOne({ username: theUsername });
 };
 
-async function findUserByNameUsername(name, username, userOrItemType){
+// tested
+async function findUserByNameUsername(thisName, thisUsername, userOrItemType){
   if (userOrItemType == "users"){
-    name_result = await userModel.find({name : name});
+    return await userModel.findOne({name : thisName, username: thisUsername});
   }
   else if (userOrItemType == "items"){
-    name_result = await itemModel.find({name : name});
+    return await itemModel.findOne({name : thisName, username: thisUsername});
   }
-  result = name_result.filter( (user) => user['username'] === username);
-  return result;
 };
 
 async function deleteUserId(id){
@@ -113,9 +114,10 @@ async function deleteItemId(id){
 }
 
 exports.getUsersOrItems = getUsersOrItems;
-exports.findUserOrItemByName = findUserOrItemByName;
 exports.findUserById = findUserById;
 exports.addUserOrItem = addUserOrItem;
+exports.findUserOrItemByName = findUserOrItemByName;
+exports.findUserByUsername = findUserByUsername;
+exports.findUserByNameUsername = findUserByNameUsername;
 exports.deleteUserId = deleteUserId;
 exports.deleteItemId = deleteItemId;
-exports.findUserByUsername = findUserByUsername;
