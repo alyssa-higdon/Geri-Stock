@@ -34,16 +34,57 @@ async function getUsersOrItems(name, username, userOrItemType) {
   return result;
 }
 
-
-async function findUserById(id) {
-  try {
-    return await userModel.findById(id);
-  } catch (error) {
-    console.log(error);
-    return undefined;
+// -------------- FIND -------------- 
+// combine find functions eventually
+async function findUserOrItemById(id, userOrItemType) {
+  if (userOrItemType == "users"){
+    try {
+      return await userModel.findById(id);
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
+  else if (userOrItemType == "items"){
+    try {
+      return await itemModel.findById(id);
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   }
 }
 
+async function findUserOrItemByName(name, userOrItemType) {
+  if (userOrItemType == "users"){
+    return await userModel.find({ name: name });
+  }
+  else if (userOrItemType == "items"){
+    return await itemModel.find({ name: name });
+  }
+}
+
+async function findUserByUsername(username, userOrItemType) {
+  if (userOrItemType == "users"){
+    return await userModel.find({ username: username });
+  }
+  else if (userOrItemType == "items"){
+    return await itemModel.find({ username: username });
+  }
+};
+
+async function findUserByNameUsername(name, username, userOrItemType){
+  if (userOrItemType == "users"){
+    name_result = await userModel.find({name : name});
+  }
+  else if (userOrItemType == "items"){
+    name_result = await itemModel.find({name : name});
+  }
+  result = name_result.filter( (user) => user['username'] === username);
+  return result;
+};
+
+// -------------- ADD -------------- 
 async function addUserOrItem(userOrItem, userOrItemType) {
   console.log(userOrItemType)
   try {
@@ -70,42 +111,29 @@ async function addUserOrItem(userOrItem, userOrItemType) {
   }
 }
 
-async function findUserOrItemByName(name, userOrItemType) {
+// -------------- DELETE -------------- 
+async function deleteUserOrItemById(id, userOrItemType){
   if (userOrItemType == "users"){
-    return await userModel.find({ name: name });
+    return await userModel.findByIdAndDelete(id);
   }
   else if (userOrItemType == "items"){
-    return await itemModel.find({ name: name });
+    return await itemModel.findByIdAndDelete(id);
   }
 }
 
-async function findUserByUsername(username, userOrItemType) {
-  if (userOrItemType == "users"){
-    return await userModel.find({ username: username });
+// -------------- EDIT -------------- 
+async function editItemById(id, updatedInfo) {  // idk if this is working
+  // ex of updatedInfo = {"name": newName, "quantity": 5}
+  try {
+    let newDate = new Date(0);
+    return await itemModel.findByIdAndUpdate(
+                            id,
+                            {$set: updatedInfo, date: newDate.setUTCSeconds(Date.now()/1000)},
+                            {new: true});
+  } catch (error) {
+    console.log(error);
+    return false;
   }
-  else if (userOrItemType == "items"){
-    return await itemModel.find({ uesrname: username });
-  }
-};
-
-async function findUserByNameUsername(name, username, userOrItemType){
-  if (userOrItemType == "users"){
-    name_result = await userModel.find({name : name});
-  }
-  else if (userOrItemType == "items"){
-    name_result = await itemModel.find({name : name});
-  }
-  result = name_result.filter( (user) => user['username'] === username);
-  return result;
-};
-
-async function deleteUserId(id){
-  const result = await userModel.findByIdAndDelete(id);
-  return result;
-  // const user_index = await userModel.findIndex( (user) => user['id'] === id);
-  // if (user_index > -1 && user_index != undefined && user_index.length !== 0){
-
-  // }
 }
 
 async function deleteItemId(id){
@@ -118,9 +146,12 @@ async function deleteItemId(id){
 }
 
 exports.getUsersOrItems = getUsersOrItems;
-exports.findUserById = findUserById;
+exports.findUserOrItemById = findUserOrItemById;
 exports.addUserOrItem = addUserOrItem;
+
+exports.deleteUserOrItemById = deleteUserOrItemById;
+exports.editItemById = editItemById;
+
 exports.deleteUserId = deleteUserId;
 exports.deleteItemId = deleteItemId;
 
-// test

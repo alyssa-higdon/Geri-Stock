@@ -9,7 +9,6 @@ import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 const CryptoJS = require('crypto-js');
 
 
-//////
 function MyApp(){
   const [characters, setCharacters] = useState([]);
   
@@ -30,8 +29,9 @@ function MyApp(){
           setItems(result);
      });
   }, [] );
+  
+// -------------- USER --------------
 
- 
 function removeOneCharacter (index){
   makeUserDeleteCall(index).then(result => {
     if (result && result.status === 204){
@@ -40,8 +40,7 @@ function removeOneCharacter (index){
       });
       setCharacters(updated); 
     }
-  })
-  
+  }) 
 }
 
 async function makeUserDeleteCall(index){
@@ -67,7 +66,7 @@ function updateUserList(person) {
 async function fetchAllUsers(){
   try{
     const responce = await axios.get('http://localhost:5001/users');
-    return responce.data.users_items;
+    return responce.data.users_or_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -92,7 +91,7 @@ async function makeUserPostCall(person){
   }
 }
 
-// item stuff
+// -------------- ITEM --------------
 
 function removeOneItem (index){
   makeItemDeleteCall(index).then(result => {
@@ -103,15 +102,14 @@ function removeOneItem (index){
       setItems(updated); 
     }
   })
-  
 }
 
 async function makeItemDeleteCall(index){
   try {
-     var _id = items[index]._id;
-     const response = await axios.delete('http://localhost:5001/items/' + _id);
-      return response;
-    }
+    var _id = items[index]._id;
+    const response = await axios.delete('http://localhost:5001/items/' + _id);
+    return response;
+  }
   catch (error) {
      console.log(error);
      return false;
@@ -128,10 +126,10 @@ function updateItemList(item) {
 
 async function fetchAllItems(){
   try{
-    console.log("fecthed All items");
+    console.log("fetched All items");
     const responce = await axios.get('http://localhost:5001/items');
     console.log(responce);
-    return responce.data.users_items;
+    return responce.data.users_or_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -171,6 +169,31 @@ async function makeItemPostCall(item){
   }
 }
 
+
+function updateOneItem(index, newInfo){
+  makeItemPatchCall(index, newInfo).then(result => {
+    if (result && result.status === 200){
+      const updated = items.filter((items, i) => {
+        return i !== index
+      });
+      setItems(updated); 
+    }
+  })
+}
+
+async function makeItemPatchCall(index, newInfo) { 
+  try {
+    //console.log("newInfo:", newInfo);
+    var _id = items[index]._id;
+    const response = await axios.patch('http://localhost:5001/items/' + _id, newInfo);
+    return response;
+ }
+ catch (error) {
+    console.log(error);
+    return false;
+ }
+}
+
 async function loginUser(person) {
   try {
       const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
@@ -190,7 +213,6 @@ async function loginUser(person) {
       return false;
   }
 }
-
 
 
 
@@ -240,7 +262,9 @@ return (
           element={
             <ItemTable
               itemData={items}
+              edititem={updateOneItem}
               removeitem={removeOneItem}
+              handlesubmit={updateItemList} 
             />
           }
         />
