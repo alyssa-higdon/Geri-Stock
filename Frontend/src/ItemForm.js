@@ -51,12 +51,12 @@ function ItemForm(props){
         />
 
 
-        <label htmlFor="tags">Tags</label>
+        <label htmlFor="tag">Tag</label>
         <input
           type="text"
-          name="tags"
-          id="tags"
-          value={item.tags}
+          name="tag"
+          id="tag"
+          value={item.tag}
           onChange={handleChange}
         />
     
