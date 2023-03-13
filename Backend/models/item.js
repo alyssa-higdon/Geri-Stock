@@ -30,7 +30,16 @@ const ItemSchema = new mongoose.Schema(
         type: String,
         required: true,
         trim: true,
-    }
+    },
+    minquantity: {
+      type: Number,
+      required: true,
+    },
+   
+    maxquantity: {
+      type: Number,
+      required: true,
+    },
 
   },
   { collection: "items_list" }

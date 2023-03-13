@@ -7,6 +7,8 @@ function ItemForm(props){
             quantity: "",
             tag: "",
             notes: "",
+            minquantity: "",
+            maxquantity: "",
             
         }
     );
@@ -27,6 +29,8 @@ function ItemForm(props){
           quantity: "",
           tag: "",
           notes: "",
+          minquantity: "",
+          maxquantity: "",
         });
       }
       
@@ -50,8 +54,6 @@ function ItemForm(props){
             value={item.quantity}
             onChange={handleChange}
           />
-
-
           <label htmlFor="tag">Tag</label>
           <input
             type="text"
@@ -67,6 +69,24 @@ function ItemForm(props){
             name="notes"
             id="notes"
             value={item.notes}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="minquantity">Miminum Desired Quantity</label>
+          <input
+            type="text"
+            name="minquantity"
+            id="minquantity"
+            value={item.minquantity}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="maxquantity">Maximuminum Desired Quantity</label>
+          <input
+            type="text"
+            name="maxquantity"
+            id="maxquantity"
+            value={item.maxquantity}
             onChange={handleChange}
           />
 
