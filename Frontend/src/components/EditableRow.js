@@ -1,7 +1,6 @@
 import React from 'react';
 
 function EditableRow(props){
-
     function handleChange(event) {
         //console.log(event.target);
         const { name, value } = event.target;
@@ -9,7 +8,7 @@ function EditableRow(props){
           ...prevItem,
           [name]: value,
         }));
-        //console.log(props.index, props.newItemData)
+        //console.log(props.index, props.newItemData);
     }
 
     return(
@@ -35,9 +34,9 @@ function EditableRow(props){
             <td>
                 <input
                     type="text"
-                    name="tags"
-                    id="tags"
-                    value={props.newItemData.tags}
+                    name="tag"
+                    id="tag"
+                    value={props.newItemData.tag}
                     onChange={handleChange}
                 ></input>
             </td>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 function ReadOnlyRow(props){
-    
     return(
         <tr key={props.index}>
             <td>{props.row.name}</td>

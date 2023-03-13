@@ -1,3 +1,4 @@
+import ItemForm from './ItemForm';
 import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
 import React, { useState, Fragment } from "react";
@@ -11,7 +12,7 @@ function TableHeader()  {
         <th>Name</th>
         <th>Quantity</th>
         <th>Tag</th>
-        <th>Id</th>
+        <th>Id or Notes</th>
         <th>Username</th>
       </tr>
     </thead>
@@ -31,6 +32,8 @@ function TableBody(props) {
   const [editRow, setEditRow] = useState(null);
 
   const handleEditClick = (event, item) => {
+    console.log("editrow:", editRow);
+    console.log("item.id:", item.id);
     event.preventDefault();
     setEditRow(item.id);
     
@@ -52,6 +55,7 @@ function TableBody(props) {
             newItemData={selectedItemData}
             setNewItemData={setSelectedItemData}
             edit={props.editItem}
+            editRow={editRow}
           />
         ) : (
           <ReadOnlyRow 
@@ -65,25 +69,30 @@ function TableBody(props) {
     );
    }
   );
-  return (
-      <tbody>
-        {rows}
-       </tbody>
+return (
+    <tbody>
+      {rows}
+    </tbody>
    );
 }
   
 function ItemTable(props) {
   return (
-    <form>
-      <table>
-        <TableHeader />
-        <TableBody 
-          itemData={props.itemData} 
-          editItem={props.edititem} 
-          removeItem={props.removeitem} 
-        />
-      </table>
-    </form>
+    <>
+      <ItemForm handleSubmit={props.handlesubmit} />
+    
+      <form>
+        <table>
+          <TableHeader />
+          <TableBody 
+            itemData={props.itemData} 
+            editItem={props.edititem} 
+            removeItem={props.removeitem} 
+          />
+        </table>
+      </form>
+    </>
+    
   );
 }
 

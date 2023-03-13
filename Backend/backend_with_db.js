@@ -67,20 +67,6 @@ app.get('/items/:id', async (req, res) => {
     }
 });
 
-//add item stuff idk
-// app.get('/items', async (req, res) => {
-//     const name = req.query['name'];
-//     if (name != undefined){
-//         let result = findItemByName(name);
-
-//         result = {items_list: result};
-//         res.send(result);
-//     }
-//     else{
-//         res.send(items);
-//     }
-// });
-
 
 ////////////////////////////////////////////////////
 // -------------- POST -------------- 
