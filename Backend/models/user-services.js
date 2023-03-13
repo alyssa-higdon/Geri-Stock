@@ -136,8 +136,22 @@ async function editItemById(id, updatedInfo) {  // idk if this is working
   }
 }
 
+async function deleteItemId(id){
+  const result = await itemModel.findByIdAndDelete(id);
+  return result;
+  // const user_index = await userModel.findIndex( (user) => user['id'] === id);
+  // if (user_index > -1 && user_index != undefined && user_index.length !== 0){
+
+  // }
+}
+
 exports.getUsersOrItems = getUsersOrItems;
 exports.findUserOrItemById = findUserOrItemById;
 exports.addUserOrItem = addUserOrItem;
+
 exports.deleteUserOrItemById = deleteUserOrItemById;
 exports.editItemById = editItemById;
+
+exports.deleteUserId = deleteUserId;
+exports.deleteItemId = deleteItemId;
+

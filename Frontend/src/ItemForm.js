@@ -1,34 +1,35 @@
 import React, {useState} from "react";
 
 function ItemForm(props){
-  const [item, setItem] = useState(
-      {
+    const [item, setItem] = useState(
+        {
+            name: "",
+            quantity: "",
+            tag: "",
+            notes: "",
+            
+        }
+    );
+    
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setItem((prevItem) => ({
+          ...prevItem,
+          [name]: value,
+        }));
+      }
+      
+
+      function submitForm() {
+        props.handleSubmit(item);
+        setItem({
           name: "",
-          role: "",
+          quantity: "",
+          tag: "",
+          notes: "",
+        });
       }
   );
-    
-  function handleChange(event) {
-    //console.log(event.target);
-    const { name, value } = event.target;
-    setItem((prevItem) => ({
-      ...prevItem,
-      [name]: value,
-    }));
-    //console.log(item);
-  }
-    
-
-  function submitForm() {
-    props.handleSubmit(item);
-    setItem({
-      name: "",
-      quantity: "",
-      tag: "",
-      notes: "",
-      username: ""
-    });
-  }
 
   return (
       <form>

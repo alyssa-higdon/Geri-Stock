@@ -1,14 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-
 const userServices = require('./models/user-services');
-
 const dotenv = require("dotenv");
 dotenv.config();
-
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@" + process.env.MONGO_CLUSTER + "/" + process.env.MONGO_DB;
-
 console.log(uri);
 
 const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -57,6 +53,7 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
+
 app.get('/items/:id', async (req, res) => {
     const id = req.params['id'];
     const result = await userServices.findUserOrItemById(id, "items");
@@ -64,6 +61,14 @@ app.get('/items/:id', async (req, res) => {
         res.status(404).send('Resource not found.');
     else {
         res.send({items_list: result});
+
+app.get('/users/', async (req, res) => {
+    const username = req.params['username'];
+    const result = await userServices.findUserByUsername(username, "users");
+    if (result === undefined || result === null)
+        res.status(404).send('Resource not found.');
+    else {
+        res.send({users_list: result});
     }
 });
 
@@ -114,6 +119,26 @@ app.delete('/users/:id', async (req, res) => {
 })
 
 app.delete('/items/:id', async (req, res) => {
+
+  const id = req.params["id"];
+  const deletedItem = await userServices.deleteItemId(id);
+  if (deletedItem)
+      res.status(204).end();
+  else
+      res.status(404).end();
+  
+})
+
+/////////////////////////////////////////////////////
+function findItemById(id) {
+    return items['items_list'].find( (item) => item['id'] === id);
+}
+
+function addItem(item){
+    items['items_list'].push(item);
+}
+
+app.delete('/users/:id', async (req, res) => {
     const id = req.params.id;
     const deletedItem = await userServices.deleteUserOrItemById(id, "items");
     if (deletedItem)
@@ -137,3 +162,37 @@ app.patch('/items/:id',  async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+
+function sum(a, b) {
+    if(typeof(a) === 'number' && typeof(b) === 'number')
+        return a + b;
+    else
+        throw new TypeError("Please supply only numbers");
+}
+  
+function div (a, b){
+    if(typeof(a) === 'number' && typeof(b) === 'number') {
+        if(b === 0) { 
+            throw new RangeError("Cannot divide by 0");
+        }
+        return a / b;
+    } else {
+        throw new TypeError("Please supply only numbers");
+    }
+}
+
+function containsNumbers(text){
+    if(typeof(text) === 'string') {
+        for (let i = 0; i < text.length; i++)
+            if (!isNaN(text.charAt(i)))
+                return true;
+        return false;
+    } else {
+        throw new TypeError("Please only provide a string");
+    }
+}
+
+exports.sum = sum;
+exports.div = div;
+exports.containsNumbers = containsNumbers;
