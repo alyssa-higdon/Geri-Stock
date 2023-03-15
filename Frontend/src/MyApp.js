@@ -197,7 +197,7 @@ async function makeItemPatchCall(index, newInfo) {
 async function loginUser(person) {
   try {
       const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
-      const responseData = response.data.users_items[0];
+      const responseData = response.data.users_or_items[0];
       const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
@@ -208,7 +208,7 @@ async function loginUser(person) {
       }
       return response;
   } catch (error) {
-      window.alert("Incorrect password or incorrect username");
+      window.alert("Incorrect password or incorrect username. error");
       console.log(error);
       return false;
   }
