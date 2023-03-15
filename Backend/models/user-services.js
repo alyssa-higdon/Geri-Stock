@@ -152,6 +152,5 @@ exports.addUserOrItem = addUserOrItem;
 exports.deleteUserOrItemById = deleteUserOrItemById;
 exports.editItemById = editItemById;
 
-exports.deleteUserId = deleteUserId;
 exports.deleteItemId = deleteItemId;
 

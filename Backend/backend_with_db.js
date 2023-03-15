@@ -59,8 +59,9 @@ app.get('/items/:id', async (req, res) => {
     const result = await userServices.findUserOrItemById(id, "items");
     if (result === undefined || result === null)
         res.status(404).send('Resource not found.');
-    else {
+    else
         res.send({items_list: result});
+});
 
 app.get('/users/', async (req, res) => {
     const username = req.params['username'];
