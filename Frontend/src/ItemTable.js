@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import MyApp from "./MyApp"
 import SearchBar from "material-ui-search-bar";
 import Filter from "./Filter"
+import { render } from '@testing-library/react';
 // firstname -> value
 var searchedValue = "";
 var props2;
@@ -20,10 +21,12 @@ function updateSearchedValue(sV) {
   //console.log("***"+typeof searchedValue)
   searchedValue = sV;
   console.log("onChange called this function");
-  TableBody(props2);
-  console.log("after calling TableBody(props)")
+  render(TableBody(props2));
   return 1;
-  //window.location.reload(false);
+  // TableBody(props2);
+  // console.log("after calling TableBody(props)");
+  // window.location.reload(false);
+  // return 1;
 }
 
 // async function searchBox() {
