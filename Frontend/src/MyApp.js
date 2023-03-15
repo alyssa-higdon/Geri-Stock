@@ -130,7 +130,7 @@ function updateItemList(item) {
 
 async function fetchAllItems(){
   try{
-    console.log("fecthed All items");
+    console.log("fetched All items");
     const responce = await axios.get('http://localhost:5001/items');
     console.log(responce);
     return responce.data.users_items;
@@ -221,21 +221,21 @@ async function fetchItemsFilter(category, value) {
 }
 // new functions for search bar below
 // originalRows = list of items
-  // const originalRows = fetchAllItems();
-  // const [rows, setRows] = useState(originalRows);
-  // const [searched, setSearched] = useState("");
+  const originalRows = fetchAllItems();
+  const [rows, setRows] = useState(originalRows);
+  const [searched, setSearched] = useState("");
 
-  // const requestSearch = (searchedVal) => {
-  //   const filteredRows = originalRows.filter((row) => {
-  //     return row.name.toLowerCase().includes(searchedVal.toLowerCase());
-  //   });
-  //   setRows(filteredRows);
-  // };
+  const requestSearch = (searchedVal) => {
+    const filteredRows = originalRows.filter((row) => {
+      return row.name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
+  };
 
-  // const cancelSearch = () => {
-  //   setSearched("");
-  //   requestSearch(searched);
-  // };
+  const cancelSearch = () => {
+    setSearched("");
+    requestSearch(searched);
+  };
 // new functions for search bar above
 
 
