@@ -28,8 +28,7 @@ function ItemForm(props){
           tag: "",
           notes: "",
         });
-      }
-  );
+      };
 
   return (
       <form>

@@ -19,12 +19,11 @@ function UserForm(props){
         [name]: value,
       }));
     }
-      
 
     function submitForm() {
       if (person.password === person.passwordReentry) {
         if (person.password.length >= 8) {
-          person.password = String(SHA256(person.password));
+          person.password = String(CryptoJS.SHA256(person.password));
           props.handleSubmit(person);
           setPerson({
             name: "",
@@ -33,24 +32,6 @@ function UserForm(props){
             password: "",
             passwordReentry: "",
           });
-
-      function submitForm() {
-        if (person.password === person.passwordReentry) {
-          if (person.password.length >= 8) {
-            var salt = CryptoJS.lib.WordArray.random(16).toString();
-            person.salt = salt;
-            person.password = String(CryptoJS.SHA256(person.password + salt));
-            props.handleSubmit(person);
-            setPerson({
-              name: "",
-              username: "",
-              role: "",
-              password: "",
-              passwordReentry: "",
-            });
-          } else {
-            alert("Password must be at least 8 characters long!");
-          }
         } else {
           alert("Password must be at least 8 characters long!");
         }

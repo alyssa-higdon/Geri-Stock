@@ -26,11 +26,26 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.get('/users/', async (req, res) => {
+    const username = req.query['username'];
+    console.log("username: " + username);
+    const result = await userServices.findUserByUsername(username, "users");
+    console.log("result: " + result)
+    if (result === undefined || result === null)
+        res.status(404).send('Resource not found.');
+    else {
+        res.send({users_list: result});
+    }
+});
+
 // -------------- GET -------------- 
 app.get('/:users_or_items', async (req, res) => {
     const users_items = req.params['users_or_items']
     const name = req.query['name'];
     username = req.query['username'];
+    console.log("users_or_items: " + users_items);
+    console.log("name: " + name);
+    console.log("username: " + username)
 
     try {
         const result = await userServices.getUsersOrItems(name, username, users_items);
@@ -61,16 +76,12 @@ app.get('/items/:id', async (req, res) => {
         res.status(404).send('Resource not found.');
     else {
         res.send({items_list: result});
-
-app.get('/users/', async (req, res) => {
-    const username = req.params['username'];
-    const result = await userServices.findUserByUsername(username, "users");
-    if (result === undefined || result === null)
-        res.status(404).send('Resource not found.');
-    else {
-        res.send({users_list: result});
     }
 });
+
+
+
+
 
 //add item stuff idk
 // app.get('/items', async (req, res) => {
@@ -145,7 +156,7 @@ app.delete('/users/:id', async (req, res) => {
         res.status(204).end();
     else
         res.status(404).end();
-})
+});
 
 // -------------- PATCH -------------- 
 app.patch('/items/:id',  async (req, res) => {

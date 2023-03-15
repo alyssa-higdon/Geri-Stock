@@ -17,11 +17,10 @@ mongoose
 async function getUsersOrItems(name, username, userOrItemType) {
   let result;
   if (name === undefined && username === undefined) {
-    if (userOrItemType == "users"){
+    if (userOrItemType === "users"){
       result = await userModel.find();
-      console.log("cat");
     }
-    else if (userOrItemType == "items"){
+    else if (userOrItemType === "items"){
       result = await itemModel.find();
     }
   } else if (name && !username) {
@@ -29,7 +28,7 @@ async function getUsersOrItems(name, username, userOrItemType) {
   } else if (username && !name) {
     result = await findUserByUsername(username, userOrItemType);
   } else if (name && username) {
-    result = await findUserByNameUsername(name, username);
+    result = await findUserByNameUsername(name, username, userOrItemType);
   }
   return result;
 }
@@ -111,6 +110,15 @@ async function addUserOrItem(userOrItem, userOrItemType) {
   }
 }
 
+async function deleteUserId(id){
+  const result = await userModel.findByIdAndDelete(id);
+  return result;
+  // const user_index = await userModel.findIndex( (user) => user['id'] === id);
+  // if (user_index > -1 && user_index != undefined && user_index.length !== 0){
+
+  // }
+}
+
 // -------------- DELETE -------------- 
 async function deleteUserOrItemById(id, userOrItemType){
   if (userOrItemType == "users"){
@@ -154,4 +162,6 @@ exports.editItemById = editItemById;
 
 exports.deleteUserId = deleteUserId;
 exports.deleteItemId = deleteItemId;
+
+exports.findUserByUsername = findUserByUsername;
 
