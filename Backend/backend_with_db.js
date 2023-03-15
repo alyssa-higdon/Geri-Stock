@@ -133,7 +133,7 @@ app.delete('/items/:id', async (req, res) => {
 
 /////////////////////////////////////////////////////
 function findItemById(id) {
-    return items['user_items'].find( (item) => item['id'] === id);
+    return items['items_list'].find( (item) => item['id'] === id);
 }
 
 function addItem(item){
