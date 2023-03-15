@@ -23,7 +23,7 @@ const ItemSchema = new mongoose.Schema(
       trim: true,
     },
     tags : {
-        type: Array,
+        type: String,
         required: false,
     },
     username : {
