@@ -40,7 +40,7 @@ function removeOneCharacter (index){
       const updated = characters.filter((character, i) => {
         return i !== index
       });
-      setCharacters(updated); 
+      setCharacters(updated);
     }
   })
   

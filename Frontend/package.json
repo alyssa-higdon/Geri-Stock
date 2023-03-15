@@ -7,12 +7,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.3.2",
+    "material-table": "^2.0.3",
+    "material-ui-search-bar": "^1.0.0-beta.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "material-ui-search-bar": "^1.0.0-beta.13"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,8 +55,8 @@
     "plugin:prettier/recommended"
   ],
   "devDependencies": {
-    "nodemon": "^2.0.20",
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1"
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.9.1",
+    "nodemon": "^2.0.20"
   }
 }

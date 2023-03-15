@@ -5,6 +5,7 @@ import SearchBar from "material-ui-search-bar";
 import Filter from "./Filter"
 import { render } from '@testing-library/react';
 import { Table } from '@material-ui/core';
+//import MaterialTable from 'material-table';
 // firstname -> value
 var searchedValue = "";
 var props2;
@@ -22,6 +23,8 @@ function updateSearchedValue(sV) {
   //console.log("***"+typeof searchedValue)
   searchedValue = sV;
   console.log("onChange called this function");
+  let s = "---------------------------------------------------------------------------------FILTERED ITEMS---------------------------------------------------------------------------"
+  render(s);
   render(TableHeader());
   render(TableBody(props2));
   return 1;
