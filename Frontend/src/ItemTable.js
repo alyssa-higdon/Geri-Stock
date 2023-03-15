@@ -5,20 +5,25 @@ import SearchBar from "material-ui-search-bar";
 import Filter from "./Filter"
 // firstname -> value
 var searchedValue = "";
-async function makeTextEntry() {
-  console.log("inside makeTextEntry")
-  return (
-  <form><br>
-  Value to look for: <input type="text" id="value"/><br></br>
-  <input type="submit" value="Submit" onclick="formdata()"/></br>
-  </form>);
-}
+var props2;
+// async function makeTextEntry() {
+//   console.log("inside makeTextEntry")
+//   return (
+//   <form><br>
+//   Value to look for: <input type="text" id="value"/><br></br>
+//   <input type="submit" value="Submit" onclick="formdata()"/></br>
+//   </form>);
+// }
 
 function updateSearchedValue(sV) {
   //searchedValue = MyApp.searchVal;
   //console.log("***"+typeof searchedValue)
   searchedValue = sV;
-  window.location.reload(false);
+  console.log("onChange called this function");
+  TableBody(props2);
+  console.log("after calling TableBody(props)")
+  return 1;
+  //window.location.reload(false);
 }
 
 // async function searchBox() {
@@ -67,7 +72,8 @@ function TableHeader() {
 }
 
 function TableBody(props) {
-    let resultRows = [];
+  props2 = props;
+  let resultRows = [];
   // const rows = props.itemData.map((row, index) => {
     let rows = props.itemData.map((row, index) => {
       console.log(row.tag.toLowerCase().includes(searchedValue.toLowerCase()));
@@ -87,23 +93,26 @@ function TableBody(props) {
     );}
    }
   );
-  //
+  // //
+  // console.log("typeof searchedValue: " + typeof searchedValue);
+  // console.log("searchedValue is: " + searchedValue);
   // if (searchedValue !== "") {
-  //   console.log("SearchVal ")
-    // for (let i=0; i < rows.length-1; i++) {
-    //   console.log(rows[i]);
-    //   if (rows[i].tag.search(searchedValue) !== -1) {
-    //   resultRows.push(rows[i])}
-    //   }
-    // new below
-    // let resultRows = rows.filter(function (row) {
-    //   return row.tag.search(searchedValue) > -1}
-    // }
-    // )
+  //   console.log("SearchVal present")
+  //   for (let i=0; i < rows.length-1; i++) {
+  //     console.log(rows[i]);
+  //     if (rows[i].tag.search(searchedValue) !== -1) {
+  //       resultRows.push(rows[i])}
+  //     }
+  //   //new below
+  //   resultRows = rows.filter(function (row) {
+  //     return row.tag.search(searchedValue) > -1})
+  //   // }
+  //   // )
   // }
   // else {
   //   resultRows = rows;
   // }
+  // //
   // instead of bottom return statement put "resultRows"
   // instead of rows
   return (
