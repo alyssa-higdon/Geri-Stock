@@ -22,6 +22,7 @@ function updateSearchedValue(sV) {
   //console.log("***"+typeof searchedValue)
   searchedValue = sV;
   console.log("onChange called this function");
+  render(TableHeader());
   render(TableBody(props2));
   return 1;
   // TableBody(props2);
