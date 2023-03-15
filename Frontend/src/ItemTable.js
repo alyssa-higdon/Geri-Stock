@@ -4,6 +4,7 @@ import MyApp from "./MyApp"
 import SearchBar from "material-ui-search-bar";
 import Filter from "./Filter"
 import { render } from '@testing-library/react';
+import { Table } from '@material-ui/core';
 // firstname -> value
 var searchedValue = "";
 var props2;
@@ -125,6 +126,16 @@ function TableBody(props) {
    );
 }
 
+// const cancelSearch = () => {
+//   setSearched("");
+//   requestSearch(searched);
+// };
+function cancelSearch(p) {
+  // searchedValue = "";
+  // render(TableBody(p));
+  window.location.reload(false);
+};
+
 function ItemTable(props) {
   return (
     //console.log("Inside IT() return")
@@ -133,7 +144,8 @@ function ItemTable(props) {
     //value={MyApp.searched}
     //onChange={(searchVal) => updateSearchedValue(searchVal)}
     onChange={(searchVal) => updateSearchedValue(searchVal)}
-    onCancelSearch={() => MyApp.cancelSearch()}
+    //onCancelSearch={() => MyApp.cancelSearch()}
+    onCancelSearch={() => cancelSearch(props)}
     //onChange={(searchVal) => MyApp.requestSearch(searchVal)}
     //onCancelSearch={() => MyApp.cancelSearch()}
   /></nav>
