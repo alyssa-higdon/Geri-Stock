@@ -1,9 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const userServices = require('./models/user-services');
+const express = require("express");
+const cors = require("cors");
+const userServices = require("./models/user-services");
 const dotenv = require("dotenv");
 dotenv.config();
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require("mongodb").MongoClient;
 const uri = "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@" + process.env.MONGO_CLUSTER + "/" + process.env.MONGO_DB;
 console.log(uri);
 
@@ -22,15 +22,15 @@ const port = 5001;
 app.use(cors());
 app.use(express.json());
 ////////////////////////////////////////////////////
-app.get('/', (req, res) => {
-res.send('Hello World!');
+app.get("/", (req, res) => {
+res.send("Hello World!");
 });
 
 // -------------- GET -------------- 
-app.get('/:users_or_items', async (req, res) => {
-    const users_items = req.params['users_or_items']
-    const name = req.query['name'];
-    username = req.query['username'];
+app.get("/:users_or_items", async (req, res) => {
+    const users_items = req.params["users_or_items"]
+    const name = req.query["name"];
+    username = req.query["username"];
 
     try {
         const result = await userServices.getUsersOrItems(name, username, users_items);
@@ -39,35 +39,35 @@ app.get('/:users_or_items', async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('An error ocurred in the server.');
+        res.status(500).send("An error ocurred in the server.");
     }
 });
 
-app.get('/users/:id', async (req, res) => {
-    const id = req.params['id'];
+app.get("/users/:id", async (req, res) => {
+    const id = req.params["id"];
     const result = await userServices.findUserOrItemById(id, users);
     if (result === undefined || result === null)
-        res.status(404).send('Resource not found.');
+        res.status(404).send("Resource not found.");
     else {
         res.send({users_list: result});
     }
 });
 
 
-app.get('/items/:id', async (req, res) => {
-    const id = req.params['id'];
+app.get("/items/:id", async (req, res) => {
+    const id = req.params["id"];
     const result = await userServices.findUserOrItemById(id, "items");
     if (result === undefined || result === null)
-        res.status(404).send('Resource not found.');
+        res.status(404).send("Resource not found.");
     else
         res.send({items_list: result});
 });
 
-app.get('/users/', async (req, res) => {
-    const username = req.params['username'];
+app.get("/users/", async (req, res) => {
+    const username = req.params["username"];
     const result = await userServices.findUserByUsername(username, "users");
     if (result === undefined || result === null)
-        res.status(404).send('Resource not found.');
+        res.status(404).send("Resource not found.");
     else {
         res.send({users_list: result});
     }
@@ -75,16 +75,14 @@ app.get('/users/', async (req, res) => {
 
 ////////////////////////////////////////////////////
 // -------------- POST -------------- 
-app.post('/:users_or_items', async (req, res) => { // :users_or_items = "users" or "items"
-    const userOrItemType = req.params['users_or_items']
+app.post("/:users_or_items", async (req, res) => { // :users_or_items = "users" or "items"
+    const userOrItemType = req.params["users_or_items"]
     const userOrItemInfo = req.body;
     userOrItemInfo.id = Date.now();
     if (userOrItemType == "items"){
-        //userOrItemInfo.id = Date.now();
         userOrItemInfo.date = new Date(0);
         userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
     }
-    //userOrItemInfo.date = temp;
 
     const savedUserOrItem = await userServices.addUserOrItem(userOrItemInfo, userOrItemType);
     if (savedUserOrItem)
@@ -95,7 +93,7 @@ app.post('/:users_or_items', async (req, res) => { // :users_or_items = "users" 
 
 
 // -------------- DELETE -------------- 
-app.delete('/users/:id', async (req, res) => {
+app.delete("/users/:id", async (req, res) => {
     const id = req.params["id"];
     const deletedUser = await userServices.deleteUserOrItemById(id, "users");
     if (deletedUser)
@@ -104,7 +102,7 @@ app.delete('/users/:id', async (req, res) => {
         res.status(404).end();
 })
 
-app.delete('/items/:id', async (req, res) => {
+app.delete("/items/:id", async (req, res) => {
 
   const id = req.params["id"];
   const deletedItem = await userServices.deleteItemId(id);
@@ -117,14 +115,14 @@ app.delete('/items/:id', async (req, res) => {
 
 /////////////////////////////////////////////////////
 function findItemById(id) {
-    return items['items_list'].find( (item) => item['id'] === id);
+    return items["items_list"].find( (item) => item["id"] === id);
 }
 
 function addItem(item){
-    items['items_list'].push(item);
+    items["items_list"].push(item);
 }
 
-app.delete('/users/:id', async (req, res) => {
+app.delete("/users/:id", async (req, res) => {
     const id = req.params.id;
     const deletedItem = await userServices.deleteUserOrItemById(id, "items");
     if (deletedItem)
@@ -134,7 +132,7 @@ app.delete('/users/:id', async (req, res) => {
 })
 
 // -------------- PATCH -------------- 
-app.patch('/items/:id',  async (req, res) => {
+app.patch("/items/:id",  async (req, res) => {
     const id = req.params["id"];
     const updatedInfo = req.body;
     const updatedItem = await userServices.editItemById(id, updatedInfo);
@@ -148,37 +146,3 @@ app.patch('/items/:id',  async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-
-function sum(a, b) {
-    if(typeof(a) === 'number' && typeof(b) === 'number')
-        return a + b;
-    else
-        throw new TypeError("Please supply only numbers");
-}
-  
-function div (a, b){
-    if(typeof(a) === 'number' && typeof(b) === 'number') {
-        if(b === 0) { 
-            throw new RangeError("Cannot divide by 0");
-        }
-        return a / b;
-    } else {
-        throw new TypeError("Please supply only numbers");
-    }
-}
-
-function containsNumbers(text){
-    if(typeof(text) === 'string') {
-        for (let i = 0; i < text.length; i++)
-            if (!isNaN(text.charAt(i)))
-                return true;
-        return false;
-    } else {
-        throw new TypeError("Please only provide a string");
-    }
-}
-
-exports.sum = sum;
-exports.div = div;
-exports.containsNumbers = containsNumbers;
