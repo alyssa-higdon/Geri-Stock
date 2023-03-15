@@ -142,7 +142,6 @@ app.patch("/items/:id",  async (req, res) => {
         res.status(405).end();
 });
 
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
