@@ -21,9 +21,9 @@ const port = 5001;
 
 app.use(cors());
 app.use(express.json());
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+res.send('Hello World!');
 });
 
 // -------------- GET -------------- 
@@ -45,7 +45,7 @@ app.get('/:users_or_items', async (req, res) => {
 
 app.get('/users/:id', async (req, res) => {
     const id = req.params['id'];
-    const result = await userServices.findUserOrItemById(id, "users");
+    const result = await userServices.findUserOrItemById(id, users);
     if (result === undefined || result === null)
         res.status(404).send('Resource not found.');
     else {
@@ -72,21 +72,6 @@ app.get('/users/', async (req, res) => {
         res.send({users_list: result});
     }
 });
-
-//add item stuff idk
-// app.get('/items', async (req, res) => {
-//     const name = req.query['name'];
-//     if (name != undefined){
-//         let result = findItemByName(name);
-
-//         result = {items_list: result};
-//         res.send(result);
-//     }
-//     else{
-//         res.send(items);
-//     }
-// });
-
 
 ////////////////////////////////////////////////////
 // -------------- POST -------------- 

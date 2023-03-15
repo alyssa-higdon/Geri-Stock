@@ -183,7 +183,6 @@ function updateOneItem(index, newInfo){
 
 async function makeItemPatchCall(index, newInfo) { 
   try {
-    //console.log("newInfo:", newInfo);
     var _id = items[index]._id;
     const response = await axios.patch('http://localhost:5001/items/' + _id, newInfo);
     return response;
@@ -217,12 +216,6 @@ async function loginUser(person) {
 
 
 return (
-  // This is what we had before:
-  // <div className="container">
-  //   <Table characterData={characters} removeCharacter={removeOneCharacter} />
-  //   <Form handleSubmit={updateList} />
-  // </div>
-  // update basename below when deploying to gh-pages
   <div className="container">
     <h1>Choose your path!</h1>
     <BrowserRouter basename="/">
@@ -277,5 +270,3 @@ return (
 );
 }
 export default MyApp;
-
-// test for ci

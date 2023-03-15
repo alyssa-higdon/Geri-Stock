@@ -20,9 +20,6 @@ function UserForm(props){
       }));
     }
       
-
-
-
       function submitForm() {
         if (person.password === person.passwordReentry) {
           if (person.password.length >= 8) {
@@ -97,7 +94,5 @@ function UserForm(props){
       );
       
 }
-
-
 
 export default UserForm;
