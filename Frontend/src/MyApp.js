@@ -4,6 +4,7 @@ import ItemTable from './ItemTable';
 import UserForm from './UserForm';
 import ItemForm from './ItemForm';
 import LogInForm from './LogInForm';
+import logo from './Geri-Stock-logo.png';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 const CryptoJS = require('crypto-js');
@@ -183,6 +184,7 @@ function updateOneItem(index, newInfo){
 
 async function makeItemPatchCall(index, newInfo) { 
   try {
+    //console.log("newInfo:", newInfo);
     var _id = items[index]._id;
     const response = await axios.patch('http://localhost:5001/items/' + _id, newInfo);
     return response;
@@ -195,8 +197,10 @@ async function makeItemPatchCall(index, newInfo) {
 
 async function loginUser(person) {
   try {
+      console.log(person.username);
       const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
-      const responseData = response.data.users_or_items[0];
+      console.log("response: " + response)
+      const responseData = response.data.users_items[0];
       const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
@@ -207,7 +211,7 @@ async function loginUser(person) {
       }
       return response;
   } catch (error) {
-      window.alert("Incorrect password or incorrect username. error");
+      window.alert("Incorrect password or incorrect username Error");
       console.log(error);
       return false;
   }
@@ -216,28 +220,38 @@ async function loginUser(person) {
 
 
 return (
+  // This is what we had before:
+  // <div className="container">
+  //   <Table characterData={characters} removeCharacter={removeOneCharacter} />
+  //   <Form handleSubmit={updateList} />
+  // </div>
+  // update basename below when deploying to gh-pages
   <div className="container">
-    <h1>Choose your path!</h1>
     <BrowserRouter basename="/">
-      <nav>
-        <ul>
-          <li>
-            <Link to="/users-table">List all USERS</Link>
-          </li>
-          <li>
-            <Link to="/user-form">Sign Up</Link>
-          </li>
-          <li> 
-            <Link to="/login-form">Log In</Link>
-          </li>
-          <li>
-            <Link to="/items-table">List all ITEMS</Link>
-          </li>
-          <li>
-            <Link to="/item-form">Insert an ITEM</Link>
-          </li>
-        </ul>
-      </nav>
+    <header>
+      <h1>
+        <img src={logo} alt="Geri-Stock logo"/>
+      </h1>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/users-table">List all USERS</Link>
+            </li>
+            <li>
+              <Link to="/user-form">Sign Up</Link>
+            </li>
+            <li> 
+              <Link to="/login-form">Log In</Link>
+            </li>
+            <li>
+              <Link to="/items-table">List all ITEMS</Link>
+            </li>
+            <li>
+              <Link to="/item-form">Insert an ITEM</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
       <Routes>
         <Route
           path="/users-table"
@@ -270,3 +284,5 @@ return (
 );
 }
 export default MyApp;
+
+// test for ci
