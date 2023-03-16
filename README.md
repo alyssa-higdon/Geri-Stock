@@ -6,6 +6,9 @@
 3) ```npm install```
 4) ```npm install crypto-js```
 4) ```npm install jest```
+
+Navigate to your Frontend folder by doing ```cd Frontend``` folder and do the following installations
+
 5) ```npm i --save material-ui-search-bar```
 6) ```npm config set legacy-peer-deps true```
 7) ```npm install```
