@@ -6,6 +6,10 @@
 3) ```npm install```
 4) ```npm install crypto-js```
 4) ```npm install jest```
+5) ```npm i --save material-ui-search-bar```
+6) ```npm config set legacy-peer-deps true```
+7) ```npm install```
+8) ```npm install @material-ui/core```
 
 ## To run
 1) Go into the Backend folder
