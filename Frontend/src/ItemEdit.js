@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 
-function ItemForm(props){
+function ItemEdit(props){
     const [item, setItem] = useState(
         {
             name: "",
-            quantity: "",
-            tag: "",
-            notes: "",
-            
+            role: "",
         }
     );
     
@@ -27,6 +24,7 @@ function ItemForm(props){
           quantity: "",
           tag: "",
           notes: "",
+          username: ""
         });
       }
       
@@ -70,10 +68,18 @@ function ItemForm(props){
             onChange={handleChange}
           />
 
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            value={item.username}
+            onChange={handleChange}
+          />
+      
           <input type="button" value="Submit" onClick={submitForm} />
         </form>
-      );
-      
+      ); 
 }
 
 

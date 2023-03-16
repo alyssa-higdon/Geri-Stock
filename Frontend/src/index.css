@@ -20,7 +20,9 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-html {
+ @import url("https://use.typekit.net/oym7rxq.css");
+
+ html {
   line-height: 1.15;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -49,7 +51,6 @@ main {
  */
 h1 {
   font-size: 2em;
-  margin: 0.67em 0;
 }
 
 /* Grouping content
@@ -387,7 +388,7 @@ ol,
 ul,
 dl,
 table {
-  margin: 0 0 1.5rem 0;
+  margin: 1em 0 1.5em 0;
 }
 
 ul li ul {
@@ -404,8 +405,9 @@ h3,
 h4,
 h5 {
   margin: 1.5rem 0;
-  font-weight: 600;
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "transat-text", sans-serif;
+  font-weight: 700;
+  font-style: normal;
   line-height: 1.2;
   color: #404040;
 }
@@ -558,7 +560,7 @@ dd {
 }
 
 .container, .small-container, .medium-container {
-  max-width: 1200px;
+  max-width: 60em;
   padding: 0 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -576,7 +578,7 @@ dd {
   padding: 30px 0;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 60em) {
   .content-section {
     padding: 60px 0;
   }
@@ -984,6 +986,8 @@ table {
 
 thead th {
   border-bottom: 2px solid #dedede;
+  text-transform: uppercase;
+  color: #3D00BE;
 }
 
 tfoot th {
@@ -991,11 +995,18 @@ tfoot th {
 }
 
 td {
+  font-family: "transat-text", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  padding: 0.5rem;
   border-bottom: 1px solid #dedede;
 }
 
-th,
-td {
+th {
+  font-family: "transat-text", sans-serif;
+  font-weight: 700;
+  font-style: normal;
   text-align: left;
   padding: 0.5rem;
 }
@@ -1014,7 +1025,7 @@ caption {
   overflow-x: auto;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 60em) {
   .contain-table {
     width: 100%;
   }
@@ -1023,6 +1034,51 @@ caption {
 /*
  * Navigation
  */
+header {
+  padding: 0.5em 1em 0.5em 1em;
+  background-color:#3D00BE;
+}
+
+nav ul { 
+  padding: 0em 0em 1em 0em; 
+} 
+
+nav ul li {
+  display: inline;
+  list-style-type: none;
+  letter-spacing: 0.05em;
+  padding-right: 2em; 
+  text-transform: uppercase;
+} 
+
+li a {
+  font-family: "transat-text", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #ffffff;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #E0D6F5;
+  font-weight: bold;
+}
+
+a:active {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+h1 {
+  width: 3em;
+}
+
 /**
  * Layout
  */

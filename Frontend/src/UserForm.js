@@ -13,14 +13,13 @@ function UserForm(props){
     );
     
     function handleChange(event) {
-        const { name, value } = event.target;
-        setPerson((prevPerson) => ({
-          ...prevPerson,
-          [name]: value,
-        }));
-      }
+      const { name, value } = event.target;
+      setPerson((prevPerson) => ({
+        ...prevPerson,
+        [name]: value,
+      }));
+    }
       
-
       function submitForm() {
         if (person.password === person.passwordReentry) {
           if (person.password.length >= 8) {
@@ -38,9 +37,7 @@ function UserForm(props){
           } else {
             alert("Password must be at least 8 characters long!");
           }
-        } else {
-          alert("Passwords do not match!");
-        }
+        } 
       }
       
       
@@ -97,7 +94,5 @@ function UserForm(props){
       );
       
 }
-
-
 
 export default UserForm;

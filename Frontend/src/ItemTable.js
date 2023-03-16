@@ -63,6 +63,13 @@ function updateSearchedValue(sV) {
 
 
 function TableHeader() {
+import ReadOnlyRow from "./components/ReadOnlyRow";
+import EditableRow from "./components/EditableRow";
+import React, { useState, Fragment } from "react";
+
+// still trying to figure out why all the rows turn into EditableRow
+
+function TableHeader()  {
   return (
     <thead>
       <tr>
@@ -99,6 +106,51 @@ function TableBody(props) {
       </td>
     </tr>
     );}
+  const [selectedItemData, setSelectedItemData] = useState({
+    name: "",
+    quantity: "",
+    tag: "",
+    notes: "",
+    username: ""
+  });
+
+  // the item (row) that has been chosen to edit
+  const [editRow, setEditRow] = useState(null);
+
+  const handleEditClick = (event, item) => {
+    event.preventDefault();
+    setEditRow(item.id);
+    
+    setSelectedItemData({
+      name: item.name,
+      quantity: item.quantity,
+      tag: item.tag,
+      notes: item.notes,
+      username: item.username
+    });
+  }
+
+  const rows = props.itemData.map((row, index) => {
+    return (
+      <Fragment key={index}>
+        {editRow === row.id ? (
+          <EditableRow 
+            index={index} 
+            newItemData={selectedItemData}
+            setNewItemData={setSelectedItemData}
+            edit={props.editItem}
+          />
+        ) : (
+          <ReadOnlyRow 
+            row={row} 
+            index={index} 
+            handleChange={handleEditClick}
+            delete={props.removeItem}
+          />
+        )}
+      </Fragment>
+    );
+
    }
   );
   // //
@@ -142,6 +194,7 @@ function cancelSearch(p) {
 
 function ItemTable(props) {
   return (
+
     //console.log("Inside IT() return")
     <>
     <nav>Filter:<SearchBar
@@ -165,6 +218,16 @@ function ItemTable(props) {
       <TableBody itemData={props.itemData} removeItem = {props.removeitem} />
     </table>
     </>
+    <form>
+      <table>
+        <TableHeader />
+        <TableBody 
+          itemData={props.itemData} 
+          editItem={props.edititem} 
+          removeItem={props.removeitem} 
+        />
+      </table>
+    </form>
   );
 }
 

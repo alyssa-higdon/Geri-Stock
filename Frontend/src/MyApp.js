@@ -5,13 +5,12 @@ import UserForm from './UserForm';
 import ItemForm from './ItemForm';
 import LogInForm from './LogInForm';
 import SearchBar from "material-ui-search-bar";
+import logo from './Geri-Stock-logo.png';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 const CryptoJS = require('crypto-js');
 
 
-
-//////
 function MyApp(){
   const [characters, setCharacters] = useState([]);
   
@@ -32,8 +31,9 @@ function MyApp(){
           setItems(result);
      });
   }, [] );
+  
+// -------------- USER --------------
 
- 
 function removeOneCharacter (index){
   makeUserDeleteCall(index).then(result => {
     if (result && result.status === 204){
@@ -42,8 +42,7 @@ function removeOneCharacter (index){
       });
       setCharacters(updated);
     }
-  })
-  
+  }) 
 }
 
 async function makeUserDeleteCall(index){
@@ -69,7 +68,7 @@ function updateUserList(person) {
 async function fetchAllUsers(){
   try{
     const responce = await axios.get('http://localhost:5001/users');
-    return responce.data.users_items;
+    return responce.data.users_or_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -94,7 +93,7 @@ async function makeUserPostCall(person){
   }
 }
 
-// item stuff
+// -------------- ITEM --------------
 
 function removeOneItem (index){
   makeItemDeleteCall(index).then(result => {
@@ -105,15 +104,14 @@ function removeOneItem (index){
       setItems(updated); 
     }
   })
-  
 }
 
 async function makeItemDeleteCall(index){
   try {
-     var _id = items[index]._id;
-     const response = await axios.delete('http://localhost:5001/items/' + _id);
-      return response;
-    }
+    var _id = items[index]._id;
+    const response = await axios.delete('http://localhost:5001/items/' + _id);
+    return response;
+  }
   catch (error) {
      console.log(error);
      return false;
@@ -133,7 +131,7 @@ async function fetchAllItems(){
     console.log("fetched All items");
     const responce = await axios.get('http://localhost:5001/items');
     console.log(responce);
-    return responce.data.users_items;
+    return responce.data.users_or_items;
   }
   catch(error){
     //We're not handling errors. Just logging into the console.
@@ -142,10 +140,30 @@ async function fetchAllItems(){
   }
 }
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 async function makeItemPostCall(item){
   try {
-     const response = await axios.post('http://localhost:5001/items', item);
-     return response;
+    let user_cookie = getCookie("auth_cookie");
+    var decrypted_cookie = CryptoJS.AES.decrypt(user_cookie, "cat enthusiast").toString(CryptoJS.enc.Utf8);
+    var username = decrypted_cookie.split('&')[1].substring(9, decrypted_cookie.split('&')[1].length);
+    item.username = username;
+    const response = await axios.post('http://localhost:5001/items', item);
+    return response;
   }
   catch (error) {
      console.log(error);
@@ -153,37 +171,52 @@ async function makeItemPostCall(item){
   }
 }
 
+
+function updateOneItem(index, newInfo){
+  makeItemPatchCall(index, newInfo).then(result => {
+    if (result && result.status === 200){
+      const updated = items.filter((items, i) => {
+        return i !== index
+      });
+      setItems(updated); 
+    }
+  })
+}
+
+async function makeItemPatchCall(index, newInfo) { 
+  try {
+    //console.log("newInfo:", newInfo);
+    var _id = items[index]._id;
+    const response = await axios.patch('http://localhost:5001/items/' + _id, newInfo);
+    return response;
+ }
+ catch (error) {
+    console.log(error);
+    return false;
+ }
+}
+
 async function loginUser(person) {
   try {
+      console.log(person.username);
       const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
-      const responseData = response.data.users_items[0];
+      console.log("response: " + response)
+      const responseData = response.data.users_or_items[0];
       const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
-      /*
-      console.log("ID: " + String(responseData._id));
-      console.log("Password: " + String(person.password));
-      console.log("Salt: " + String(responseData.salt));
-      console.log("Stored password: " + responseData.password);      
-      */
-
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
-          window.loggedIn = true;
-          window.loggedInUsername = person.username;
-          window.loggedInName = responseData.name;
-          window.loggedInRole = responseData.role;
-          console.log(window.loggedIn);
+          var plaintextCookie = "name="+responseData.name+"&username="+person.username+"&role="+responseData.role;
+          document.cookie = "auth_cookie="+CryptoJS.AES.encrypt(plaintextCookie, "cat enthusiast");
       } else {
           window.alert("Incorrect password or incorrect username");
       }
       return response;
   } catch (error) {
-      window.alert("Incorrect password or incorrect username");
+      window.alert("Incorrect password or incorrect username Error");
       console.log(error);
       return false;
   }
 }
-
-
 
 
 async function fetchItemsFilter(category, value) {
@@ -238,7 +271,6 @@ async function fetchItemsFilter(category, value) {
   };
 // new functions for search bar above
 
-
 return (
   // This is what we had before:
   // <div className="container">
@@ -247,7 +279,6 @@ return (
   // </div>
   // update basename below when deploying to gh-pages
   <div className="container">
-    <h1>Choose your path!</h1>
     <BrowserRouter basename="/">
       <nav>
         
@@ -276,6 +307,30 @@ return (
           </li>
         </ul>
       </nav>
+    <header>
+      <h1>
+        <img src={logo} alt="Geri-Stock logo"/>
+      </h1>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/users-table">List all USERS</Link>
+            </li>
+            <li>
+              <Link to="/user-form">Sign Up</Link>
+            </li>
+            <li> 
+              <Link to="/login-form">Log In</Link>
+            </li>
+            <li>
+              <Link to="/items-table">List all ITEMS</Link>
+            </li>
+            <li>
+              <Link to="/item-form">Insert an ITEM</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
       <Routes>
         <Route
           path="/users-table"
@@ -293,7 +348,9 @@ return (
           element={
             <ItemTable
               itemData={items}
+              edititem={updateOneItem}
               removeitem={removeOneItem}
+              handlesubmit={updateItemList} 
             />
           }
         />
@@ -304,3 +361,5 @@ return (
 );
 }
 export default MyApp;
+
+// test for ci
