@@ -6,7 +6,6 @@ const ItemSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      // unique: true because multiple users can have apples
     },
     quantity: {
       type: Number,

@@ -8,22 +8,11 @@ import { Table } from '@material-ui/core';
 import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
 
-//import MaterialTable from 'material-table';
-// firstname -> value
 var searchedValue = "";
 var props2;
-// async function makeTextEntry() {
-//   console.log("inside makeTextEntry")
-//   return (
-//   <form><br>
-//   Value to look for: <input type="text" id="value"/><br></br>
-//   <input type="submit" value="Submit" onclick="formdata()"/></br>
-//   </form>);
-// }
+
 
 function updateSearchedValue(sV) {
-  //searchedValue = MyApp.searchVal;
-  //console.log("***"+typeof searchedValue)
   searchedValue = sV;
   console.log("onChange called this function");
   let s = "---------------------------------------------------------------------------------FILTERED ITEMS---------------------------------------------------------------------------"
@@ -31,43 +20,7 @@ function updateSearchedValue(sV) {
   render(TableHeader());
   render(TableBody(props2));
   return 1;
-  // TableBody(props2);
-  // console.log("after calling TableBody(props)");
-  // window.location.reload(false);
-  // return 1;
 }
-
-// async function searchBox() {
-//   return (<><nav><SearchBar
-//     //value={MyApp.searched}
-//     // added below line to set global var to use in other part
-//     // searchedValue = (searchVal);
-//     //onChange={(searchVal) => searchedValue = (searchVal)}
-//     onChange={(searchVal) => updateSearchedValue(searchVal)}
-//     onCancelSearch={() => MyApp.cancelSearch()}
-//     // onChange={(searchVal) => requestSearch(searchVal)}
-//     //onChange={(searchVal) => MyApp.requestSearch(searchVal)}
-//     //onCancelSearch={() => MyApp.cancelSearch()}
-//   /></nav></>)
-// }
-
-// function FilterButtons(props, category, value)
-// {
-//   return (
-//     <tr>
-//     <td>
-//       <button onClick={() => searchBox}>Filter by Quantity</button>
-//       &nbsp;&nbsp;&nbsp;
-//       <button onClick={() => searchBox}>Filter by Tags</button>
-//     </td>
-//   </tr>
-//   );
-// }
-
-
-
-
-// still trying to figure out why all the rows turn into EditableRow
 
 function TableHeader()  {
   return (
@@ -80,9 +33,6 @@ function TableHeader()  {
         <th>Username</th>
       </tr>
     </thead>
-    // <>
-    //   <Filter />
-    // </>
   );
 }
 
@@ -152,28 +102,7 @@ function TableBody(props) {
 
    }
   );
-  // //
-  // console.log("typeof searchedValue: " + typeof searchedValue);
-  // console.log("searchedValue is: " + searchedValue);
-  // if (searchedValue !== "") {
-  //   console.log("SearchVal present")
-  //   for (let i=0; i < rows.length-1; i++) {
-  //     console.log(rows[i]);
-  //     if (rows[i].tag.search(searchedValue) !== -1) {
-  //       resultRows.push(rows[i])}
-  //     }
-  //   //new below
-  //   resultRows = rows.filter(function (row) {
-  //     return row.tag.search(searchedValue) > -1})
-  //   // }
-  //   // )
-  // }
-  // else {
-  //   resultRows = rows;
-  // }
-  // //
-  // instead of bottom return statement put "resultRows"
-  // instead of rows
+
   return (
       <tbody>
         {rows}
@@ -181,13 +110,7 @@ function TableBody(props) {
    );
 }
 
-// const cancelSearch = () => {
-//   setSearched("");
-//   requestSearch(searched);
-// };
 function cancelSearch(p) {
-  // searchedValue = "";
-  // render(TableBody(p));
   window.location.reload(false);
 };
 
@@ -216,7 +139,7 @@ function ItemTable(props) {
     //     <TableHeader />
     //     <TableBody 
     //       itemData={props.itemData} 
-    //       editItem={props.edititem} 
+    //       editItem=g{props.edititem} 
     //       removeItem={props.removeitem} 
     //     />
     //   </table>

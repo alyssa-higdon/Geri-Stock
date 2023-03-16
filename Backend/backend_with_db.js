@@ -82,7 +82,6 @@ app.post("/:users_or_items", async (req, res) => { // :users_or_items = "users" 
     if (userOrItemType == "items"){
         userOrItemInfo.date = new Date(0);
         userOrItemInfo.date.setUTCSeconds(userOrItemInfo.id/1000);
-        userOrItemInfo.username = "Joe";
     }
 
     const savedUserOrItem = await userServices.addUserOrItem(userOrItemInfo, userOrItemType);
