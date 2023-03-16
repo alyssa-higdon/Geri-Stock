@@ -100,8 +100,6 @@ async function addUserOrItem(userOrItem, userOrItemType) {
       console.log("Error: wrong users or items type");
       return false;
     }
-    // const savedUserOrItem = await userOrItemToAdd.save();
-    // return savedUserOrItem;
     return false;
   } catch (error) {
     console.log(error);
@@ -120,8 +118,7 @@ async function deleteUserOrItemById(id, userOrItemType){
 }
 
 // -------------- EDIT -------------- 
-async function editItemById(id, updatedInfo) {  // idk if this is working
-  // ex of updatedInfo = {"name": newName, "quantity": 5}
+async function editItemById(id, updatedInfo) {
   try {
     let newDate = new Date(0);
     return await itemModel.findByIdAndUpdate(
@@ -137,10 +134,6 @@ async function editItemById(id, updatedInfo) {  // idk if this is working
 async function deleteItemId(id){
   const result = await itemModel.findByIdAndDelete(id);
   return result;
-  // const user_index = await userModel.findIndex( (user) => user['id'] === id);
-  // if (user_index > -1 && user_index != undefined && user_index.length !== 0){
-
-  // }
 }
 
 exports.getUsersOrItems = getUsersOrItems;
