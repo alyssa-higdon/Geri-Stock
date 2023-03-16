@@ -12,14 +12,6 @@ import EditableRow from "./components/EditableRow";
 // firstname -> value
 var searchedValue = "";
 var props2;
-// async function makeTextEntry() {
-//   console.log("inside makeTextEntry")
-//   return (
-//   <form><br>
-//   Value to look for: <input type="text" id="value"/><br></br>
-//   <input type="submit" value="Submit" onclick="formdata()"/></br>
-//   </form>);
-// }
 
 function updateSearchedValue(sV) {
   //searchedValue = MyApp.searchVal;
@@ -30,42 +22,9 @@ function updateSearchedValue(sV) {
   render(s);
   render(TableHeader());
   render(TableBody(props2));
+  console.log("should have rendered filtered")
   return 1;
-  // TableBody(props2);
-  // console.log("after calling TableBody(props)");
-  // window.location.reload(false);
-  // return 1;
 }
-
-// async function searchBox() {
-//   return (<><nav><SearchBar
-//     //value={MyApp.searched}
-//     // added below line to set global var to use in other part
-//     // searchedValue = (searchVal);
-//     //onChange={(searchVal) => searchedValue = (searchVal)}
-//     onChange={(searchVal) => updateSearchedValue(searchVal)}
-//     onCancelSearch={() => MyApp.cancelSearch()}
-//     // onChange={(searchVal) => requestSearch(searchVal)}
-//     //onChange={(searchVal) => MyApp.requestSearch(searchVal)}
-//     //onCancelSearch={() => MyApp.cancelSearch()}
-//   /></nav></>)
-// }
-
-// function FilterButtons(props, category, value)
-// {
-//   return (
-//     <tr>
-//     <td>
-//       <button onClick={() => searchBox}>Filter by Quantity</button>
-//       &nbsp;&nbsp;&nbsp;
-//       <button onClick={() => searchBox}>Filter by Tags</button>
-//     </td>
-//   </tr>
-//   );
-// }
-
-
-
 
 // still trying to figure out why all the rows turn into EditableRow
 
@@ -80,18 +39,13 @@ function TableHeader()  {
         <th>Username</th>
       </tr>
     </thead>
-    // <>
-    //   <Filter />
-    // </>
   );
 }
 
 function TableBody(props) {
   props2 = props;
-  let resultRows = [];
     let rows = props.itemData.map((row, index) => {
       console.log(row.tag.toLowerCase().includes(searchedValue.toLowerCase()));
-      // if row.tag is undefined
     if (row.tag.includes(searchedValue)) {
     return (
       <tr key={index}>
@@ -152,28 +106,6 @@ function TableBody(props) {
 
    }
   );
-  // //
-  // console.log("typeof searchedValue: " + typeof searchedValue);
-  // console.log("searchedValue is: " + searchedValue);
-  // if (searchedValue !== "") {
-  //   console.log("SearchVal present")
-  //   for (let i=0; i < rows.length-1; i++) {
-  //     console.log(rows[i]);
-  //     if (rows[i].tag.search(searchedValue) !== -1) {
-  //       resultRows.push(rows[i])}
-  //     }
-  //   //new below
-  //   resultRows = rows.filter(function (row) {
-  //     return row.tag.search(searchedValue) > -1})
-  //   // }
-  //   // )
-  // }
-  // else {
-  //   resultRows = rows;
-  // }
-  // //
-  // instead of bottom return statement put "resultRows"
-  // instead of rows
   return (
       <tbody>
         {rows}
@@ -181,13 +113,7 @@ function TableBody(props) {
    );
 }
 
-// const cancelSearch = () => {
-//   setSearched("");
-//   requestSearch(searched);
-// };
 function cancelSearch(p) {
-  // searchedValue = "";
-  // render(TableBody(p));
   window.location.reload(false);
 };
 
@@ -195,7 +121,8 @@ function ItemTable(props) {
   return (
     <>
     <nav>Filter:<SearchBar
-    onChange={(searchVal) => updateSearchedValue(searchVal)}
+    //onChange={(searchVal) => updateSearchedValue(searchVal)}
+    onKeyDown={(e) => (e.keyCode === 13 ? updateSearchedValue(MyApp.searchVal) : null)}
     onCancelSearch={() => cancelSearch(props)}
   /></nav>
   <form>
