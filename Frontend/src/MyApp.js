@@ -200,7 +200,7 @@ async function loginUser(person) {
       console.log(person.username);
       const response = await axios.get('http://localhost:5001/users/?username=' + person.username);
       console.log("response: " + response)
-      const responseData = response.data.users_items[0];
+      const responseData = response.data.users_or_items[0];
       const hashedPass = String(CryptoJS.SHA256(person.password + responseData.salt));
       if (hashedPass === responseData.password) {
           window.alert("Logged In. Hello, " + responseData.name);
