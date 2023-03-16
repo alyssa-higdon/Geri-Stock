@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState, Fragment } from "react";
 import ReactDOM from 'react-dom/client'
 import MyApp from "./MyApp"
 import SearchBar from "material-ui-search-bar";
-import Filter from "./Filter"
 import { render } from '@testing-library/react';
 import { Table } from '@material-ui/core';
+
+import ReadOnlyRow from "./components/ReadOnlyRow";
+import EditableRow from "./components/EditableRow";
+
 //import MaterialTable from 'material-table';
 // firstname -> value
 var searchedValue = "";
@@ -62,10 +65,7 @@ function updateSearchedValue(sV) {
 // }
 
 
-function TableHeader() {
-import ReadOnlyRow from "./components/ReadOnlyRow";
-import EditableRow from "./components/EditableRow";
-import React, { useState, Fragment } from "react";
+
 
 // still trying to figure out why all the rows turn into EditableRow
 
@@ -89,7 +89,6 @@ function TableHeader()  {
 function TableBody(props) {
   props2 = props;
   let resultRows = [];
-  // const rows = props.itemData.map((row, index) => {
     let rows = props.itemData.map((row, index) => {
       console.log(row.tag.toLowerCase().includes(searchedValue.toLowerCase()));
       // if row.tag is undefined
@@ -105,7 +104,7 @@ function TableBody(props) {
         <button onClick={() => props.removeItem(index)}>Delete</button>
       </td>
     </tr>
-    );}
+    );}});
   const [selectedItemData, setSelectedItemData] = useState({
     name: "",
     quantity: "",
@@ -130,7 +129,7 @@ function TableBody(props) {
     });
   }
 
-  const rows = props.itemData.map((row, index) => {
+  rows = props.itemData.map((row, index) => {
     return (
       <Fragment key={index}>
         {editRow === row.id ? (
@@ -194,40 +193,35 @@ function cancelSearch(p) {
 
 function ItemTable(props) {
   return (
-
-    //console.log("Inside IT() return")
     <>
     <nav>Filter:<SearchBar
-    //value={MyApp.searched}
-    //onChange={(searchVal) => updateSearchedValue(searchVal)}
     onChange={(searchVal) => updateSearchedValue(searchVal)}
-    //onCancelSearch={() => MyApp.cancelSearch()}
     onCancelSearch={() => cancelSearch(props)}
-    //onChange={(searchVal) => MyApp.requestSearch(searchVal)}
-    //onCancelSearch={() => MyApp.cancelSearch()}
   /></nav>
-  {/* <nav>Filter by Tag:<SearchBar
-    value={MyApp.searched}
-    onChange={(searchVal) => MyApp.requestSearch(searchVal)}
-    onCancelSearch={() => MyApp.cancelSearch()}
-  /></nav> */}
-    {/* <table> <FilterButtons/> </table> */}
-
+  <form>
     <table>
       <TableHeader />
-      <TableBody itemData={props.itemData} removeItem = {props.removeitem} />
+      <TableBody
+      itemData={props.itemData}
+      editItem={props.edititem}
+      removeItem = {props.removeitem} />
     </table>
-    </>
-    <form>
-      <table>
-        <TableHeader />
-        <TableBody 
-          itemData={props.itemData} 
-          editItem={props.edititem} 
-          removeItem={props.removeitem} 
-        />
-      </table>
     </form>
+    </>
+    
+
+    // Jackies stuff we might need this later
+    //  <form>
+    //   <table>
+    //     <TableHeader />
+    //     <TableBody 
+    //       itemData={props.itemData} 
+    //       editItem={props.edititem} 
+    //       removeItem={props.removeitem} 
+    //     />
+    //   </table>
+    // </form>
+    
   );
 }
 

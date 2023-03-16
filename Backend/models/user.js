@@ -32,9 +32,6 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    // id : {
-    //   type : Number
-    // }
   },
   { collection: "users_list" }
 );

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-const CryptoJS = require('crypto-js');
+const CryptoJS = require("crypto-js");
 
 function UserForm(props){
     const [person, setPerson] = useState(
