@@ -18,11 +18,11 @@ async function getUsersOrItems(name, username, userOrItemType) {
   let result;
   if (name === undefined && username === undefined) {
     if (userOrItemType == "users"){
-      result = await userModel.find();
+      result = await userModel.findOne();
       console.log("cat");
     }
     else if (userOrItemType == "items"){
-      result = await itemModel.find();
+      result = await itemModel.findOne();
     }
   } else if (name && !username) {
     result = await findUserOrItemByName(name, userOrItemType);
@@ -55,33 +55,31 @@ async function findUserOrItemById(id, userOrItemType) {
   }
 }
 
-async function findUserOrItemByName(name, userOrItemType) {
+async function findUserOrItemByName(theName, userOrItemType) {
   if (userOrItemType == "users"){
-    return await userModel.find({ name: name });
+    return await userModel.findOne({ name: theName });
   }
   else if (userOrItemType == "items"){
-    return await itemModel.find({ name: name });
+    return await itemModel.findOne({ name: theName });
   }
 }
 
-async function findUserByUsername(username, userOrItemType) {
+async function findUserByUsername(theUsername, userOrItemType) {
   if (userOrItemType == "users"){
-    return await userModel.find({ username: username });
+    return await userModel.findOne({ username: theUsername });
   }
   else if (userOrItemType == "items"){
-    return await itemModel.find({ username: username });
+    return await itemModel.findOne({ username: theUsername });
   }
 };
 
-async function findUserByNameUsername(name, username, userOrItemType){
+async function findUserByNameUsername(theName, theUsername, userOrItemType){
   if (userOrItemType == "users"){
-    name_result = await userModel.find({name : name});
+    return await userModel.findOne({name : theName});
   }
   else if (userOrItemType == "items"){
-    name_result = await itemModel.find({name : name});
+    return await itemModel.findOne({name : theName});
   }
-  result = name_result.filter( (user) => user['username'] === username);
-  return result;
 };
 
 // -------------- ADD -------------- 
@@ -148,9 +146,7 @@ async function deleteItemId(id){
 exports.getUsersOrItems = getUsersOrItems;
 exports.findUserOrItemById = findUserOrItemById;
 exports.addUserOrItem = addUserOrItem;
-
-exports.deleteUserOrItemById = deleteUserOrItemById;
-exports.editItemById = editItemById;
-
+exports.findUserOrItemByName = findUserOrItemByName;
+exports.findUserByUsername = findUserByUsername;
+exports.findUserByNameUsername = findUserByNameUsername;
 exports.deleteItemId = deleteItemId;
-
