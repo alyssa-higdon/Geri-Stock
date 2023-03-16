@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-import ReactDOM from 'react-dom/client'
 import MyApp from "./MyApp"
 import SearchBar from "material-ui-search-bar";
 import { render } from '@testing-library/react';
@@ -12,11 +11,13 @@ import EditableRow from "./components/EditableRow";
 // firstname -> value
 var searchedValue = "";
 var props2;
+var whichRows = 0;
 
 function updateSearchedValue(sV) {
   //searchedValue = MyApp.searchVal;
-  //console.log("***"+typeof searchedValue)
+  console.log("***"+typeof searchedValue)
   searchedValue = sV;
+  whichRows = 1;
   console.log("onChange called this function");
   let s = "---------------------------------------------------------------------------------FILTERED ITEMS---------------------------------------------------------------------------"
   render(s);
@@ -44,16 +45,18 @@ function TableHeader()  {
 
 function TableBody(props) {
   props2 = props;
-    let rows = props.itemData.map((row, index) => {
-      console.log(row.tag.toLowerCase().includes(searchedValue.toLowerCase()));
-    if (row.tag.includes(searchedValue)) {
+  console.log("this is searchedValue: " + searchedValue)
+    let rws = props.itemData.map((rw, index) => {
+      //console.log(rw.tag.toLowerCase().includes(searchedValue.toLowerCase()));
+      console.log(rw.tag);
+    if (rw.tag.includes(searchedValue)) {
     return (
       <tr key={index}>
-      <td>{row.name}</td>
-      <td>{row.quantity}</td>
-      <td>{row.tag}</td>
-      <td>{row._id}</td>
-      <td>{row.username}</td>
+      <td>{rw.name}</td>
+      <td>{rw.quantity}</td>
+      <td>{rw.tag}</td>
+      <td>{rw._id}</td>
+      <td>{rw.username}</td>
       <td>
         <button onClick={() => props.removeItem(index)}>Delete</button>
       </td>
@@ -83,7 +86,7 @@ function TableBody(props) {
     });
   }
 
-  rows = props.itemData.map((row, index) => {
+  let rows = props.itemData.map((row, index) => {
     return (
       <Fragment key={index}>
         {editRow === row.id ? (
@@ -106,14 +109,26 @@ function TableBody(props) {
 
    }
   );
-  return (
-      <tbody>
-        {rows}
-       </tbody>
-   );
+
+  if (whichRows === 0){
+    return (
+        <tbody>
+          {rows}
+        </tbody>
+    );
+  }
+  else {
+    return (
+        <tbody>
+          {rws}
+        </tbody>
+  );
+  }
+
 }
 
-function cancelSearch(p) {
+function cancelSearch() {
+  whichRows = 0;
   window.location.reload(false);
 };
 
@@ -121,9 +136,8 @@ function ItemTable(props) {
   return (
     <>
     <nav>Filter:<SearchBar
-    //onChange={(searchVal) => updateSearchedValue(searchVal)}
     onKeyDown={(e) => (e.keyCode === 13 ? updateSearchedValue(MyApp.searchVal) : null)}
-    onCancelSearch={() => cancelSearch(props)}
+    onCancelSearch={() => cancelSearch()}
   /></nav>
   <form>
     <table>
@@ -137,7 +151,7 @@ function ItemTable(props) {
     </>
     
 
-    // Jackies stuff we might need this later
+    // Jackie's stuff we might need this later
     //  <form>
     //   <table>
     //     <TableHeader />
