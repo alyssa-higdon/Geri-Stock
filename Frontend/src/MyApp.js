@@ -318,6 +318,9 @@ return (
         <Route path="/item-form" element={<ItemForm handleSubmit={updateItemList} />} />        
       </Routes>
     </BrowserRouter>
+    <footer>
+      <p> © 2023 Geri-Stock Inc.  All rights reserved.</p>
+    </footer>
   </div>
 );
 }
