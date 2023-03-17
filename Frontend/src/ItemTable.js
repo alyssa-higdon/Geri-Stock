@@ -9,17 +9,11 @@ import EditableRow from "./components/EditableRow";
 
 var searchedValue = "";
 var props2;
-<<<<<<< HEAD
-
-
-function updateSearchedValue(sV) {
-=======
 var whichRows = 0;
 
 function updateSearchedValue(sV) {
   //searchedValue = MyApp.searchVal;
   console.log("***"+typeof searchedValue)
->>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
   searchedValue = sV;
   whichRows = 1;
   console.log("onChange called this function");
@@ -31,11 +25,8 @@ function updateSearchedValue(sV) {
   return 1;
 }
 
-<<<<<<< HEAD
-=======
 // still trying to figure out why all the rows turn into EditableRow
 
->>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
 function TableHeader()  {
   return (
     <thead>
@@ -117,16 +108,6 @@ function TableBody(props) {
    }
   );
 
-<<<<<<< HEAD
-  return (
-      <tbody>
-        {rows}
-       </tbody>
-   );
-}
-
-function cancelSearch(p) {
-=======
   if (whichRows === 0){
     return (
         <tbody>
@@ -146,7 +127,6 @@ function cancelSearch(p) {
 
 function cancelSearch() {
   whichRows = 0;
->>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
   window.location.reload(false);
 };
 
