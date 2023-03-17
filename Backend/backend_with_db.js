@@ -21,7 +21,6 @@ const port = 5001;
 
 app.use(cors());
 app.use(express.json());
-////////////////////////////////////////////////////
 app.get("/", (req, res) => {
 res.send("Hello World!");
 });
@@ -73,9 +72,8 @@ app.get("/users/", async (req, res) => {
     }
 });
 
-////////////////////////////////////////////////////
 // -------------- POST -------------- 
-app.post("/:users_or_items", async (req, res) => { // :users_or_items = "users" or "items"
+app.post("/:users_or_items", async (req, res) => {
     const userOrItemType = req.params["users_or_items"]
     const userOrItemInfo = req.body;
     userOrItemInfo.id = Date.now();

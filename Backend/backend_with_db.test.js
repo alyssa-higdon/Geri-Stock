@@ -218,6 +218,3 @@ test("unexpected type", async () => {
   expect(result).toBe(false);
 
 });
-
-
-// testing again

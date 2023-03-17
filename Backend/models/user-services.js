@@ -17,7 +17,6 @@ async function getUsersOrItems(name, username, userOrItemType) {
     if (userOrItemType == "users"){
       result = await userModel.find();
     }
-    // says this line is uncovered but I have a test for it.
     else if (userOrItemType == "items"){
       result = await itemModel.find();
     } else {
@@ -73,11 +72,6 @@ async function findUserByUsername(theUsername, userOrItemType) {
   } else {
     return undefined;
   }
-  /*
-  else if (userOrItemType == "items"){
-    return await itemModel.find({ username: theUsername });
-  }
-  */
 };
 
 async function findUserByNameUsername(theName, theUsername, userOrItemType){
