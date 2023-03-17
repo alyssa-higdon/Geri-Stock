@@ -127,7 +127,7 @@ async function deleteUserOrItemById(id, userOrItemType){
   }
 }
 
-/*
+
 // -------------- EDIT -------------- 
 async function editItemById(id, updatedInfo) {
   try {
@@ -141,13 +141,14 @@ async function editItemById(id, updatedInfo) {
     return false;
   }
 }
-*/
+
 
 async function deleteItemId(id){
   const result = await itemModel.findByIdAndDelete(id);
   return result;
 }
 
+exports.editItemById = editItemById;
 exports.getUsersOrItems = getUsersOrItems;
 exports.findUserOrItemById = findUserOrItemById;
 exports.addUserOrItem = addUserOrItem;
