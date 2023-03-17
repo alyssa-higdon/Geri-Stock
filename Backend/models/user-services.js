@@ -109,10 +109,6 @@ async function addUserOrItem(userOrItem, userOrItemType) {
       console.log("Error: wrong users or items type");
       return false;
     }
-<<<<<<< HEAD
-    return false;
-=======
->>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
   } catch (error) {
     console.log(error);
     return false;
