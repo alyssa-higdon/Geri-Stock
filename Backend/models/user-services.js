@@ -20,12 +20,14 @@ async function getUsersOrItems(name, username, userOrItemType) {
     // says this line is uncovered but I have a test for it.
     else if (userOrItemType == "items"){
       result = await itemModel.find();
+    } else {
+      result = undefined;
     }
   } else if (name && !username) {
     result = await findUserOrItemByName(name, userOrItemType);
   } else if (username && !name) {
     result = await findUserByUsername(username, userOrItemType);
-  } else if (name && username) {
+  } else {
     result = await findUserByNameUsername(name, username, userOrItemType);
   }
   return result;
@@ -49,6 +51,8 @@ async function findUserOrItemById(id, userOrItemType) {
       console.log(error);
       return undefined;
     }
+  } else {
+    return undefined;
   }
 }
 
@@ -58,12 +62,16 @@ async function findUserOrItemByName(theName, userOrItemType) {
   }
   else if (userOrItemType == "items"){
     return await itemModel.findOne({ name: theName });
+  } else {
+    return undefined;
   }
 }
 
 async function findUserByUsername(theUsername, userOrItemType) {
   if (userOrItemType == "users"){
     return await userModel.findOne({ username: theUsername });
+  } else {
+    return undefined;
   }
   /*
   else if (userOrItemType == "items"){
@@ -78,6 +86,8 @@ async function findUserByNameUsername(theName, theUsername, userOrItemType){
   }
   else if (userOrItemType == "items"){
     return await itemModel.findOne({name : theName});
+  } else {
+    return undefined;
   }
 };
 

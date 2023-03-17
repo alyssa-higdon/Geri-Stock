@@ -30,22 +30,28 @@ test("test find user by name", async () => {
 });
 
 test("test find user by username", async () => {
-  const result = await userServices.findUserByUsername("alexhatch", "users");
+  var result = await userServices.findUserByUsername("alexhatch", "users");
 
   expect(result.name).toBe("Alex Hatch");
   expect(result.role).toBe("admin");
   expect(result.username).toBe("alexhatch");
   expect(result.password).toBe("05694b486bff0582fb5175cbe7cb9fb143d0d51a8335c55dd3e7d0590ee8cc5e");
   expect(result.salt).toBe("f29ee61ebf80b36899d15a84245181c5");
+
+  var result = await userServices.findUserByUsername("alexhatch", "wrong")
+  expect(result).toBe(undefined);
+
 });
 
 test("test find item by name", async () => {
-  const result = await userServices.findUserOrItemByName("newitem", "items");
+  var result = await userServices.findUserOrItemByName("newitem", "items");
 
   expect(result.name).toBe("newitem");
   expect(result.quantity).toBe(10);
   expect(result.username).toBe("Joe");
 
+  var result = await userServices.findUserOrItemByName("newitem", "wrong");
+  expect(result).toBe(undefined);
 
 });
 
@@ -60,11 +66,15 @@ test("test find user by name and username", async () => {
 });
 
 test("test find item by name and username", async () => {
-  const result = await userServices.findUserByNameUsername("newitem", "Joe", "items");
+  var result = await userServices.findUserByNameUsername("newitem", "Joe", "items");
 
   expect(result.name).toBe("newitem");
   expect(result.quantity).toBe(10);
   expect(result.username).toBe("Joe");
+
+  var result = await userServices.findUserByNameUsername("newitem", "Joe", "wrong");
+  expect(result).toBe(undefined);
+
 });
 
 test("test add user", async () => {
@@ -86,8 +96,13 @@ test("test delete user", async () => {
 
   await userServices.deleteUserOrItemById(test_user._id, "users");
 
-  const result = await userServices.findUserByNameUsername("Test User", "Test username", "users");
+  var result = await userServices.findUserByNameUsername("Test User", "Test username", "users");
   expect(result).toBe(null);
+
+  var result = await userServices.deleteUserOrItemById(test_user._id, "wrong");
+  expect(result).toBe(undefined);
+
+
 });
 
 test("test add item1", async () => {
@@ -167,11 +182,19 @@ test("test get user item main function", async () => {
   expect(result.username).toBe("alexhatch");
   expect(result.password).toBe("05694b486bff0582fb5175cbe7cb9fb143d0d51a8335c55dd3e7d0590ee8cc5e");
   expect(result.salt).toBe("f29ee61ebf80b36899d15a84245181c5");
+
+  var result = await userServices.getUsersOrItems(undefined, undefined, "wrong");
+  expect(result).toBe(undefined);
 });
 
 test("test cannot find user id", async () => {
-  const result = await userServices.findUserOrItemById(1, "users");
+  var result = await userServices.findUserOrItemById(1, "users");
   expect(result).toBe(undefined);
+
+
+  var result = await userServices.findUserOrItemById(1, "wrong");
+  expect(result).toBe(undefined);
+
 });
 
 test("test cannot find item id", async () => {
