@@ -206,4 +206,18 @@ test("unexpected type", async () => {
   const result = await userServices.addUserOrItem(null, "incorrect");
   expect(result).toBe(false);
 });
+
+test("unexpected type", async () => {
+  const updatedResult = await userServices.findUserOrItemById("640f79d937c5785d59db0e4e", "items");
+  var result = await userServices.editItemById("640f79d937c5785d59db0e4e", updatedResult);
+  expect(result.name).toBe("newitem");
+  expect(result.quantity).toBe(10);
+  expect(result.username).toBe("Joe");
+
+  var result = await userServices.editItemById(1, updatedResult);
+  expect(result).toBe(false);
+
+});
+
+
 // testing again
