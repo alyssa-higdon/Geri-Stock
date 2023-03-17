@@ -122,6 +122,8 @@ async function deleteUserOrItemById(id, userOrItemType){
   }
   else if (userOrItemType == "items"){
     return await itemModel.findByIdAndDelete(id);
+  } else {
+    return undefined;
   }
 }
 
