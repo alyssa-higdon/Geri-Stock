@@ -38,5 +38,5 @@ jobs:
       working-directory: Backend
     - run: npm run build --if-present
       working-directory: Backend
-    - run: npm test --force-exit
+    - run: npm test
       working-directory: Backend

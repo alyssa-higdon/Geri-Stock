@@ -4,7 +4,7 @@
   "description": "",
   "main": "backend_with_db.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --collectCoverage --forceExit",
     "dev": "nodemon backend_with_db.js",
     "start": "node backend_with_db.js",
     "coverage": "jest --collectCoverage --forceExit"
