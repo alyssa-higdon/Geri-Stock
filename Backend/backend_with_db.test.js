@@ -10,6 +10,15 @@ test("test find user by id", async () => {
   expect(result.salt).toBe("f29ee61ebf80b36899d15a84245181c5");
 });
 
+test("test find item by id", async () => {
+  const result = await userServices.findUserOrItemById("640f79d937c5785d59db0e4e", "items");
+  
+  expect(result.name).toBe("newitem");
+  expect(result.quantity).toBe(10);
+  expect(result.username).toBe("Joe");
+
+});
+
 test("test find user by name", async () => {
   const result = await userServices.findUserOrItemByName("Alex Hatch", "users");
 
@@ -30,7 +39,7 @@ test("test find user by username", async () => {
   expect(result.salt).toBe("f29ee61ebf80b36899d15a84245181c5");
 });
 
-test("test find item by username", async () => {
+test("test find item by name", async () => {
   const result = await userServices.findUserOrItemByName("newitem", "items");
 
   expect(result.name).toBe("newitem");
@@ -50,10 +59,77 @@ test("test find user by name and username", async () => {
   expect(result.salt).toBe("f29ee61ebf80b36899d15a84245181c5");
 });
 
-test("test find itm by name and username", async () => {
+test("test find item by name and username", async () => {
   const result = await userServices.findUserByNameUsername("newitem", "Joe", "items");
 
   expect(result.name).toBe("newitem");
   expect(result.quantity).toBe(10);
   expect(result.username).toBe("Joe");
+});
+
+test("test add user", async () => {
+  let mockPerson = {name: "Test User", username: "Test username", role: "Test role", password: "Test password", salt: "Test salt"};
+  await userServices.addUserOrItem(mockPerson, "users");
+  const result = await userServices.findUserByNameUsername("Test User", "Test username", "users");
+
+  expect(result.name).toBe("Test User");
+  expect(result.role).toBe("Test role");
+  expect(result.username).toBe("Test username");
+  expect(result.password).toBe("Test password");
+  expect(result.salt).toBe("Test salt");
+});
+
+test("test delete user", async () => {
+  let mockPerson = {name: "Test User", username: "Test username", role: "Test role", password: "Test password", salt: "Test salt"};
+  await userServices.addUserOrItem(mockPerson, "users");
+  const test_user = await userServices.findUserByNameUsername("Test User", "Test username", "users");
+
+  await userServices.deleteUserOrItemById(test_user._id, "users");
+
+  const result = await userServices.findUserByNameUsername("Test User", "Test username", "users");
+  expect(result).toBe(null);
+});
+
+test("test add item1", async () => {
+  let mockItem = {name: "Test Item", quantity: 1, date: new Date("2023-03-16"), notes: "Test note", tag: "Test tag", username: "Test username"};
+  await userServices.addUserOrItem(mockItem, "items");
+  const result = await userServices.findUserOrItemByName("Test Item", "items");
+
+  expect(result.name).toBe("Test Item");
+  expect(result.notes).toBe("Test note");
+  expect(result.tag).toBe("Test tag");
+  expect(result.username).toBe("Test username");
+});
+
+test("test delete item", async () => {
+  let mockItem = {name: "Test Item", quantity: 1, notes: "Test note", tag: "Test tag", username: "Test username"};
+  await userServices.addUserOrItem(mockItem, "items");
+  const testItem = await userServices.findUserOrItemByName("Test Item", "items");
+
+  await userServices.deleteUserOrItemById(testItem._id, "items");
+
+  const result = await userServices.findUserOrItemByName("Test Item", "items");
+  expect(result).toBe(null);
+});
+
+test("test add item2", async () => {
+  let mockItem = {name: "Test Item", quantity: 1, date: new Date("2023-03-16"), notes: "Test note", tag: "Test tag", username: "Test username"};
+  await userServices.addUserOrItem(mockItem, "items");
+  const result = await userServices.findUserOrItemByName("Test Item", "items");
+
+  expect(result.name).toBe("Test Item");
+  expect(result.notes).toBe("Test note");
+  expect(result.tag).toBe("Test tag");
+  expect(result.username).toBe("Test username");
+});
+
+test("test delete item by id", async () => {
+  let mockItem = {name: "Test Item", quantity: 1, notes: "Test note", tag: "Test tag", username: "Test username"};
+  await userServices.addUserOrItem(mockItem, "items");
+  const testItem = await userServices.findUserOrItemByName("Test Item", "items");
+
+  await userServices.deleteItemId(testItem._id);
+
+  const result = await userServices.findUserOrItemByName("Test Item", "items");
+  expect(result).toBe(null);
 });

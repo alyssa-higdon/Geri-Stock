@@ -69,13 +69,13 @@ async function findUserByUsername(theUsername, userOrItemType) {
     return await userModel.findOne({ username: theUsername });
   }
   else if (userOrItemType == "items"){
-    return await itemModel.findOne({ username: theUsername });
+    return await itemModel.find({ username: theUsername });
   }
 };
 
 async function findUserByNameUsername(theName, theUsername, userOrItemType){
   if (userOrItemType == "users"){
-    return await userModel.findOne({name : theName});
+    return await userModel.findOne({name : theName, username: theUsername});
   }
   else if (userOrItemType == "items"){
     return await itemModel.findOne({name : theName});
@@ -149,4 +149,5 @@ exports.addUserOrItem = addUserOrItem;
 exports.findUserOrItemByName = findUserOrItemByName;
 exports.findUserByUsername = findUserByUsername;
 exports.findUserByNameUsername = findUserByNameUsername;
+exports.deleteUserOrItemById = deleteUserOrItemById;
 exports.deleteItemId = deleteItemId;
