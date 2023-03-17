@@ -7,29 +7,28 @@ dotenv.config();
 mongoose.set("debug", true);
 mongoose.set('strictQuery', true);
 
-mongoose
-  .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
+mongoose.connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => console.log(error));
+    useUnifiedTopology: true,}).catch((error) => console.log(error));
 
 async function getUsersOrItems(name, username, userOrItemType) {
   let result;
   if (name === undefined && username === undefined) {
     if (userOrItemType == "users"){
       result = await userModel.find();
-      console.log("cat");
     }
+    // says this line is uncovered but I have a test for it.
     else if (userOrItemType == "items"){
       result = await itemModel.find();
+    } else {
+      result = undefined;
     }
   } else if (name && !username) {
     result = await findUserOrItemByName(name, userOrItemType);
   } else if (username && !name) {
     result = await findUserByUsername(username, userOrItemType);
-  } else if (name && username) {
-    result = await findUserByNameUsername(name, username);
+  } else {
+    result = await findUserByNameUsername(name, username, userOrItemType);
   }
   return result;
 }
@@ -52,6 +51,8 @@ async function findUserOrItemById(id, userOrItemType) {
       console.log(error);
       return undefined;
     }
+  } else {
+    return undefined;
   }
 }
 
@@ -61,24 +62,32 @@ async function findUserOrItemByName(theName, userOrItemType) {
   }
   else if (userOrItemType == "items"){
     return await itemModel.findOne({ name: theName });
+  } else {
+    return undefined;
   }
 }
 
 async function findUserByUsername(theUsername, userOrItemType) {
   if (userOrItemType == "users"){
     return await userModel.findOne({ username: theUsername });
+  } else {
+    return undefined;
   }
+  /*
   else if (userOrItemType == "items"){
-    return await itemModel.findOne({ username: theUsername });
+    return await itemModel.find({ username: theUsername });
   }
+  */
 };
 
 async function findUserByNameUsername(theName, theUsername, userOrItemType){
   if (userOrItemType == "users"){
-    return await userModel.findOne({name : theName});
+    return await userModel.findOne({name : theName, username: theUsername});
   }
   else if (userOrItemType == "items"){
     return await itemModel.findOne({name : theName});
+  } else {
+    return undefined;
   }
 };
 
@@ -100,7 +109,10 @@ async function addUserOrItem(userOrItem, userOrItemType) {
       console.log("Error: wrong users or items type");
       return false;
     }
+<<<<<<< HEAD
     return false;
+=======
+>>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
   } catch (error) {
     console.log(error);
     return false;
@@ -114,9 +126,12 @@ async function deleteUserOrItemById(id, userOrItemType){
   }
   else if (userOrItemType == "items"){
     return await itemModel.findByIdAndDelete(id);
+  } else {
+    return undefined;
   }
 }
 
+/*
 // -------------- EDIT -------------- 
 async function editItemById(id, updatedInfo) {
   try {
@@ -130,6 +145,7 @@ async function editItemById(id, updatedInfo) {
     return false;
   }
 }
+*/
 
 async function deleteItemId(id){
   const result = await itemModel.findByIdAndDelete(id);
@@ -142,4 +158,5 @@ exports.addUserOrItem = addUserOrItem;
 exports.findUserOrItemByName = findUserOrItemByName;
 exports.findUserByUsername = findUserByUsername;
 exports.findUserByNameUsername = findUserByNameUsername;
+exports.deleteUserOrItemById = deleteUserOrItemById;
 exports.deleteItemId = deleteItemId;

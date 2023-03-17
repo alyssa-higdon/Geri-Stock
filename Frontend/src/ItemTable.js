@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-import ReactDOM from 'react-dom/client'
 import MyApp from "./MyApp"
 import SearchBar from "material-ui-search-bar";
 import { render } from '@testing-library/react';
@@ -10,18 +9,33 @@ import EditableRow from "./components/EditableRow";
 
 var searchedValue = "";
 var props2;
+<<<<<<< HEAD
 
 
 function updateSearchedValue(sV) {
+=======
+var whichRows = 0;
+
+function updateSearchedValue(sV) {
+  //searchedValue = MyApp.searchVal;
+  console.log("***"+typeof searchedValue)
+>>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
   searchedValue = sV;
+  whichRows = 1;
   console.log("onChange called this function");
   let s = "---------------------------------------------------------------------------------FILTERED ITEMS---------------------------------------------------------------------------"
   render(s);
   render(TableHeader());
   render(TableBody(props2));
+  console.log("should have rendered filtered")
   return 1;
 }
 
+<<<<<<< HEAD
+=======
+// still trying to figure out why all the rows turn into EditableRow
+
+>>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
 function TableHeader()  {
   return (
     <thead>
@@ -38,18 +52,18 @@ function TableHeader()  {
 
 function TableBody(props) {
   props2 = props;
-  let resultRows = [];
-    let rows = props.itemData.map((row, index) => {
-      console.log(row.tag.toLowerCase().includes(searchedValue.toLowerCase()));
-      // if row.tag is undefined
-    if (row.tag.includes(searchedValue)) {
+  console.log("this is searchedValue: " + searchedValue)
+    let rws = props.itemData.map((rw, index) => {
+      //console.log(rw.tag.toLowerCase().includes(searchedValue.toLowerCase()));
+      console.log(rw.tag);
+    if (rw.tag.includes(searchedValue)) {
     return (
       <tr key={index}>
-      <td>{row.name}</td>
-      <td>{row.quantity}</td>
-      <td>{row.tag}</td>
-      <td>{row._id}</td>
-      <td>{row.username}</td>
+      <td>{rw.name}</td>
+      <td>{rw.quantity}</td>
+      <td>{rw.tag}</td>
+      <td>{rw._id}</td>
+      <td>{rw.username}</td>
       <td>
         <button onClick={() => props.removeItem(index)}>Delete</button>
       </td>
@@ -79,7 +93,7 @@ function TableBody(props) {
     });
   }
 
-  rows = props.itemData.map((row, index) => {
+  let rows = props.itemData.map((row, index) => {
     return (
       <Fragment key={index}>
         {editRow === row.id ? (
@@ -103,6 +117,7 @@ function TableBody(props) {
    }
   );
 
+<<<<<<< HEAD
   return (
       <tbody>
         {rows}
@@ -111,6 +126,27 @@ function TableBody(props) {
 }
 
 function cancelSearch(p) {
+=======
+  if (whichRows === 0){
+    return (
+        <tbody>
+          {rows}
+        </tbody>
+    );
+  }
+  else {
+    return (
+        <tbody>
+          {rws}
+        </tbody>
+  );
+  }
+
+}
+
+function cancelSearch() {
+  whichRows = 0;
+>>>>>>> fa78e1f9c9f1749614b70331c5d3f860333fcfa2
   window.location.reload(false);
 };
 
@@ -118,8 +154,8 @@ function ItemTable(props) {
   return (
     <>
     <nav>Filter:<SearchBar
-    onChange={(searchVal) => updateSearchedValue(searchVal)}
-    onCancelSearch={() => cancelSearch(props)}
+    onKeyDown={(e) => (e.keyCode === 13 ? updateSearchedValue(MyApp.searchVal) : null)}
+    onCancelSearch={() => cancelSearch()}
   /></nav>
   <form>
     <table>
@@ -133,7 +169,7 @@ function ItemTable(props) {
     </>
     
 
-    // Jackies stuff we might need this later
+    // Jackie's stuff we might need this later
     //  <form>
     //   <table>
     //     <TableHeader />

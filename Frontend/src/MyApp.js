@@ -4,7 +4,6 @@ import ItemTable from './ItemTable';
 import UserForm from './UserForm';
 import ItemForm from './ItemForm';
 import LogInForm from './LogInForm';
-import SearchBar from "material-ui-search-bar";
 import logo from './Geri-Stock-logo.png';
 import axios from 'axios';
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
@@ -218,41 +217,6 @@ async function loginUser(person) {
   }
 }
 
-
-async function fetchItemsFilter(category, value) {
-  var filtered_items = []
-  try {
-    console.log("filtered items");
-    const responce = await axios.get('http://localhost:5001/items')
-    console.log(responce);
-    //return responce.data.users_items;
-    // for (let i=0; i<(responce.data.users_items).length; i++) {
-    //   if (responce.data.users_items[i].cat === value) {
-    //     filtered_items.push(responce.data.users_items[i]);
-    //   }
-    // }
-    switch (category) {
-      // search tags list to see if value is in the list
-      case "tags":
-        filtered_items = responce.data.users_items.filter(item => item.tags.includes(value));
-        break;
-      case "date":
-        filtered_items = filtered_items = responce.data.users_items.filter(item => item.date === value);
-        break;
-      case "quantity":
-        filtered_items = responce.data.users_items.filter(item => item.quantity === value);
-        break;
-      default:
-        break;
-    }
-    return filtered_items
-  }
-  catch(error) {
-    console.log(error);
-    return false;
-  }
-}
-// new functions for search bar below
 // originalRows = list of items
   const originalRows = fetchAllItems();
   const [rows, setRows] = useState(originalRows);
@@ -265,10 +229,6 @@ async function fetchItemsFilter(category, value) {
     setRows(filteredRows);
   };
 
-  const cancelSearch = () => {
-    setSearched("");
-    requestSearch(searched);
-  };
 // new functions for search bar above
 
 return (
