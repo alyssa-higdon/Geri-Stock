@@ -37,6 +37,9 @@ function UserForm(props){
           } else {
             alert("Password must be at least 8 characters long!");
           }
+        }
+        else {
+          alert("Passwords do not match!");
         } 
       }
       
