@@ -22,7 +22,7 @@
  */
  @import url("https://use.typekit.net/oym7rxq.css");
 
- html {
+html {
   line-height: 1.15;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -321,6 +321,7 @@ textarea {
   /* 2 */
 }
 
+
 /* Interactive
    ========================================================================== */
 /*
@@ -388,7 +389,7 @@ ol,
 ul,
 dl,
 table {
-  margin: 1em 0 1.5em 0;
+  margin: 1em 0 1em 0;
 }
 
 ul li ul {
@@ -470,12 +471,15 @@ h5 {
 }
 
 a {
-  color: #0366ee;
+  color: #3D00BE;
   text-decoration: none;
+  font-family: "transat-text", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 a:hover, a:active, a:focus {
-  color: #0246a2;
+  color: #6433CB;
   text-decoration: underline;
 }
 
@@ -783,16 +787,17 @@ dd {
 .button, a.button, button, [type=submit], [type=reset], [type=button] {
   -webkit-appearance: none;
   display: inline-block;
-  border: 1px solid #0366ee;
+  border: 1px solid #6433CB;
   border-radius: 4px;
-  background: #0366ee;
+  background: #6433CB;
   color: #ffffff;
-  font-weight: 600;
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "transat-text", sans-serif;
+  font-weight: 700;
+  font-style: normal;
   font-size: 1rem;
-  text-transform: none;
+  text-transform: uppercase;
   padding: 0.75rem 1.25rem;
-  margin: 0 0 0.5rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
@@ -801,15 +806,15 @@ dd {
 }
 
 .button:hover, a.button:hover, button:hover, [type=submit]:hover, [type=reset]:hover, [type=button]:hover {
-  border: 1px solid #0250bc;
-  background: #0250bc;
+  border: 1px solid #3D00BE;
+  background: #3D00BE;
   color: #ffffff;
   text-decoration: none;
 }
 
 .button:focus, .button:active, a.button:focus, a.button:active, button:focus, button:active, [type=submit]:focus, [type=submit]:active, [type=reset]:focus, [type=reset]:active, [type=button]:focus, [type=button]:active {
-  border: 1px solid #0250bc;
-  background: #0250bc;
+  border: 1px solid #3D00BE;
+  background: #3D00BE;
   color: #ffffff;
   text-decoration: none;
 }
@@ -865,6 +870,11 @@ a.square-button {
 a.full-button {
   display: block;
   width: 100%;
+}
+
+.addItems {
+  justify-items: right;
+  align-items: right;
 }
 
 /**
@@ -927,7 +937,9 @@ select::-ms-expand {
 }
 
 label {
-  font-weight: 600;
+  font-family: "transat-text", sans-serif;
+  font-weight: 700;
+  font-style: normal;
   max-width: 100%;
   display: block;
   margin: 1rem 0 0.5rem;
@@ -992,6 +1004,9 @@ thead th {
 
 tfoot th {
   border-top: 2px solid #dedede;
+  font-family: "transat-text", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 td {
@@ -1031,16 +1046,23 @@ caption {
   }
 }
 
-/*
- * Navigation
- */
+/**
+* stuff that I added that I'm not sure where to put
+*/
+
+/* Header and Navigation */
 header {
   padding: 0.5em 1em 0.5em 1em;
   background-color:#3D00BE;
 }
 
+h1 {
+  width: 3em;
+  padding-left: 0.5em;
+}
+
 nav ul { 
-  padding: 0em 0em 1em 0em; 
+  padding-left: 1em; 
 } 
 
 nav ul li {
@@ -1075,8 +1097,44 @@ a:active {
   font-weight: bold;
 }
 
-h1 {
-  width: 3em;
+/* Pop up form */
+
+div.popup {
+  position: fixed;
+  top: 5%;
+  left: 40%;
+  width: 20em;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  min-height: 100vh;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.popup {
+  animation-name: animate-pop;
+}
+@keyframes animate-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+/* Footer */
+
+footer {
+  font-family: "transat-text", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  padding-top: 8em;
 }
 
 /**
