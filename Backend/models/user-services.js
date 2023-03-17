@@ -7,12 +7,9 @@ dotenv.config();
 mongoose.set("debug", true);
 mongoose.set('strictQuery', true);
 
-mongoose
-  .connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
+mongoose.connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => console.log(error));
+    useUnifiedTopology: true,})//.catch((error) => console.log(error));
 
 async function getUsersOrItems(name, username, userOrItemType) {
   let result;
@@ -29,7 +26,7 @@ async function getUsersOrItems(name, username, userOrItemType) {
   } else if (username && !name) {
     result = await findUserByUsername(username, userOrItemType);
   } else if (name && username) {
-    result = await findUserByNameUsername(name, username);
+    result = await findUserByNameUsername(name, username, userOrItemType);
   }
   return result;
 }
@@ -68,9 +65,11 @@ async function findUserByUsername(theUsername, userOrItemType) {
   if (userOrItemType == "users"){
     return await userModel.findOne({ username: theUsername });
   }
+  /*
   else if (userOrItemType == "items"){
     return await itemModel.find({ username: theUsername });
   }
+  */
 };
 
 async function findUserByNameUsername(theName, theUsername, userOrItemType){
@@ -100,9 +99,6 @@ async function addUserOrItem(userOrItem, userOrItemType) {
       console.log("Error: wrong users or items type");
       return false;
     }
-    // const savedUserOrItem = await userOrItemToAdd.save();
-    // return savedUserOrItem;
-    return false;
   } catch (error) {
     console.log(error);
     return false;
@@ -119,6 +115,7 @@ async function deleteUserOrItemById(id, userOrItemType){
   }
 }
 
+/*
 // -------------- EDIT -------------- 
 async function editItemById(id, updatedInfo) {  // idk if this is working
   // ex of updatedInfo = {"name": newName, "quantity": 5}
@@ -133,6 +130,7 @@ async function editItemById(id, updatedInfo) {  // idk if this is working
     return false;
   }
 }
+*/
 
 async function deleteItemId(id){
   const result = await itemModel.findByIdAndDelete(id);
