@@ -9,7 +9,7 @@ mongoose.set('strictQuery', true);
 
 mongoose.connect("mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@cluster0.kpnxlin.mongodb.net/Geri-Stock", {
     useNewUrlParser: true,
-    useUnifiedTopology: true,})//.catch((error) => console.log(error));
+    useUnifiedTopology: true,}).catch((error) => console.log(error));
 
 async function getUsersOrItems(name, username, userOrItemType) {
   let result;
