@@ -34,6 +34,9 @@ jobs:
         cache: 'npm'
         cache-dependency-path: "Backend/package-lock.json"
 
-    - run: npm ci
+    - run: npm install
+      working-directory: Backend
     - run: npm run build --if-present
+      working-directory: Backend
     - run: npm test
+      working-directory: Backend
